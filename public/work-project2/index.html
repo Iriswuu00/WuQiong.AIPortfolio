@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>儿童 AI 陪伴硬件 Pro 版｜云端 Agent 记忆系统策略优化 · 案例</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 48px 24px 80px;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    color: #1F2329; background: #FFFFFF; line-height: 1.75; font-size: 15px;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  .doc-header { padding-bottom: 20px; border-bottom: 1px solid #E5E6EB; margin-bottom: 8px; }
+  .doc-title { font-size: 26px; font-weight: 700; line-height: 1.4; margin: 0 0 10px; }
+  .doc-subtitle { color: #646A73; font-size: 14px; margin: 0 0 14px; line-height: 1.6; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .tag { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 4px; background: #E8F0FF; color: #1456F0; line-height: 20px; }
+  .tag.grey { background: #F0F1F3; color: #646A73; }
+  h2 { font-size: 20px; font-weight: 700; margin: 36px 0 14px; line-height: 1.4; padding-top: 8px; }
+  h3 { font-size: 16px; font-weight: 600; margin: 22px 0 8px; line-height: 1.4; }
+  p { margin: 0 0 12px; }
+  ul, ol { padding-left: 22px; margin: 0 0 12px; }
+  li { margin-bottom: 6px; }
+  ul li::marker { color: #1456F0; }
+  strong { font-weight: 600; }
+  blockquote {
+    margin: 14px 0; padding: 12px 16px; background: #F5F6F7;
+    border-left: 3px solid #1456F0; color: #4E5969; font-size: 14px; line-height: 1.7;
+    border-radius: 0 4px 4px 0;
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  th, td { border: 1px solid #BABEC4; padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #FAFBFC; font-weight: 600; }
+  .num { color: #1456F0; font-weight: 600; }
+  hr { border: none; border-top: 1px solid #E5E6EB; margin: 28px 0; }
+  .doc-footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid #E5E6EB; color: #8A8F99; font-size: 13px; line-height: 1.7; }
+  .step-chain { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 16px; font-size: 13px; color: #4E5969; }
+  .step-chain .node { background: #F0F1F3; padding: 4px 10px; border-radius: 4px; }
+  .step-chain .arrow { color: #BABEC4; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="doc-header">
+    <h1 class="doc-title">儿童 AI 陪伴硬件 Pro 版｜云端 Agent 对话体验与记忆系统策略优化</h1>
+    <p class="doc-subtitle">V1 记忆能力不可度量、问题不透明；以记忆系统为核心抓手，联动英语分级、家长端看板与 System Prompt 全链路升级云端对话体验，目标提升双端长期留存。</p>
+    <div class="meta-row">
+      <span class="tag">AI 产品经理 · 独立主导</span>
+      <span class="tag grey">2026 年项目</span>
+      <span class="tag grey">方案通过技术评审待排期</span>
+      <span class="tag grey">案例已脱敏</span>
+    </div>
+  </div>
+
+  <h2>一、项目背景</h2>
+  <p>面向 6–12 岁儿童的 AI 陪伴硬件（桌伴形态），孩子为直接用户、家长为付费决策者。V1 已具备基础长记忆能力，但上线后长留存不及预期，且记忆模块<strong>没有系统化评测、问题不透明</strong>——只知道用户有抱怨，不清楚问题出在哪一层、影响面多大。</p>
+  <p>业务目标为提升长留存。拆解路径：长留存依赖关系连续性 → 关系连续性依赖记忆质量 → V1 记忆能力不可度量。第一步不是设计新方案，而是先建立测量能力，把 V1 问题从主观感受变成可量化、可归因的结论。</p>
+
+  <blockquote>
+    <strong>核心判断：</strong>AI 陪伴产品的长期留存，不取决于单次对话有多聪明，而取决于用户第二天回来时是否觉得"昨天的关系还在继续"。聊天记录只是保存内容，记忆负责把内容转化为"它了解我"的体验——这是 D7、D30 与长期迁移成本的真正杠杆。
+  </blockquote>
+
+  <h2>二、目标用户与核心场景</h2>
+  <table>
+    <tr><th style="width:120px;">角色</th><th>使用场景与诉求</th></tr>
+    <tr><td>孩子（6–12 岁）</td><td>设备端日常对话、英语陪练、听故事；低龄孩子听不懂长句、高龄孩子嫌幼稚，核心诉求是愿意多聊几轮</td></tr>
+    <tr><td>家长（付费方）</td><td>家长端 APP，关心孩子使用内容、能力进步与安全；诉求是看得见价值、可控，不希望看到原始对话记录（涉及儿童隐私）</td></tr>
+  </table>
+
+  <h2>三、问题定位与关键决策</h2>
+
+  <h3>3.1 业务目标拆解</h3>
+  <div class="step-chain">
+    <span class="node">业务目标：提升长留存</span><span class="arrow">→</span>
+    <span class="node">拆出关系连续性</span><span class="arrow">→</span>
+    <span class="node">关系连续性依赖记忆质量</span><span class="arrow">→</span>
+    <span class="node">V1 记忆能力不可度量</span>
+  </div>
+
+  <h3>3.2 负反馈调研：记忆是最高频痛点</h3>
+  <p>人工抽检用户反馈与对话日志，按体验问题分类统计。<strong>记忆相关负反馈占全部体验类负反馈的 <span class="num">18%</span>，为占比最高的一类</strong>。典型表达：</p>
+  <ul>
+    <li>"它不记得我喜欢什么"</li>
+    <li>"上次说我喜欢恐龙，这次又说我喜欢汽车"</li>
+    <li>"每次聊都像第一次见"</li>
+  </ul>
+  <p>共性不是"答错了"，而是关系断裂感——对应长留存的判断。</p>
+
+  <h3>3.3 小范围对照验证：记忆与留存强相关</h3>
+  <p>负反馈只能说明用户抱怨，不能直接推出"做记忆能提升留存"。抽样 500 名用户、控制活跃度变量分组对比：</p>
+  <table>
+    <tr><th>分组</th><th>设备端 D7 留存</th></tr>
+    <tr><td>高频使用记忆功能的用户</td><td><span class="num">35%</span></td></tr>
+    <tr><td>低频使用记忆功能的用户</td><td><span class="num">18%</span></td></tr>
+  </table>
+  <p>结论从"记忆有问题"升级为"记忆质量与留存强相关"，记忆系统由此确立为本次优化主线。</p>
+
+  <h3>3.4 100 条 BadCase 四层归因</h3>
+  <p>定位方向后，进一步回答"记忆哪里坏了"。整理约 100 条记忆相关 BadCase，按系统链路（而非表面现象）分成四类：</p>
+  <table>
+    <tr><th>归因分类</th><th>占比</th><th>典型问题</th></tr>
+    <tr><td>数据质量问题</td><td>35%</td><td>错误记忆、新旧信息冲突未处理</td></tr>
+    <tr><td>检索召回问题</td><td>30%</td><td>应召回时未召回、召回了不适用的记忆</td></tr>
+    <tr><td>数据合规问题</td><td>20%</td><td>写入了不应长期存储的高风险信息</td></tr>
+    <tr><td>下游应用缺失</td><td>15%</td><td>记忆数据未转化为家长可感知的价值</td></tr>
+  </table>
+  <p>分层直接对应方案的四个方向——写入、召回、合规、下游应用。</p>
+
+  <h3>3.5 为什么记忆是主线</h3>
+  <ul>
+    <li><strong>影响面最大</strong>：记忆是系统级能力，贯穿所有对话场景；英语分级、对话长度只是子集；</li>
+    <li><strong>数据相关性已验证</strong>：只有记忆拿到了"与 D7 留存强相关"的对照结论，其他方向只有用户反馈、无留存相关性证据；</li>
+    <li><strong>是其他体验优化的底座</strong>：英语测评结果本身就是一种"能力记忆"，家长端看板展示的也是记忆沉淀的成果——记忆不做好，这些场景优化缺乏基础。</li>
+  </ul>
+
+  <h2>四、解决方案</h2>
+
+  <h3>4.1 记忆系统全链路设计</h3>
+  <p>针对四类 BadCase，从写入到使用全链路重构：</p>
+  <ul>
+    <li><strong>写入筛选</strong>：定义"什么信息值得进入长期记忆"的判断规则，将记忆分成三类——<strong>用户偏好 / 互动事实 / 临时上下文</strong>，明确儿童隐私合规边界，从源头减少脏数据与越界存储；</li>
+    <li><strong>冲突处理与过期降权</strong>：同一信息矛盾时新信息优先、旧信息降权保留而非直接删除；不同类型记忆设差异化有效期，过期自动降权；</li>
+    <li><strong>意图驱动三层召回</strong>：根据当前对话意图判断是否查记忆、查什么、查多少，三层过滤（相关性 → 适用性 → 可执行性），防止"召回了看起来相关但已不适用"的<strong>负面迁移</strong>；</li>
+    <li><strong>记忆主动使用规则</strong>：定义记忆在什么场景主动融入回复、什么场景保持沉默，平衡陪伴感与不越界；</li>
+    <li><strong>三层分层存储</strong>：短期记忆保留最近几轮对话原文，保证连贯；中期记忆把更早对话自动压成摘要，用摘要代替原文，保留关键信息但压缩 Token；长期记忆把孩子明确表达的偏好和关键信息（"喜欢恐龙""不爱吃胡萝卜"）提取进画像，跨对话永久保留。上下文里只有最近几轮原文 + 历史摘要 + 用户画像，Token 用量可控、关键信息不丢。</li>
+  </ul>
+  <blockquote>
+    设计原则：记忆系统的核心不是"记住所有东西"，而是在长期交互中保持关系连续性——同时明确"该忘记什么"和"什么时候不调用记忆"。
+  </blockquote>
+
+  <h3>4.2 英语对话分级优化</h3>
+  <p>英语对话是产品卖点场景，但 V1 回复难度随机——低龄听不懂、高龄嫌简单，该场景人均对话轮次偏低。方案：</p>
+  <ul>
+    <li>设计<strong>英语能力分级测评体系（4 级）</strong>，按词汇量与表达能力定级；</li>
+    <li>按等级输出适配难度的分级回复，让孩子"听得懂才愿意多聊"；</li>
+    <li>测评结果作为一种"能力记忆"沉淀，反哺个性化体验。</li>
+  </ul>
+
+  <h3>4.3 家长端成长看板联动</h3>
+  <p>家长端把记忆转化为家长可感知的价值：<strong>可解释</strong>——对话数据转化为统计指标展示（不暴露原始对话，儿童隐私）；<strong>可控</strong>——家长端设置提供<strong>个性化记忆开关</strong>，可随时开启/关闭孩子的个性化记忆，关闭即停止写入与召回、已有记忆冻结；<strong>可处置</strong>——数据删除绑定设备/账号格式化与重置，不单独设删除入口。对应 BadCase 归因中"下游应用缺失"的问题，让沉淀的记忆转化为家长可感知的价值。</p>
+
+  <h3>4.4 System Prompt 策略落地</h3>
+  <p>上层能力最终落到 System Prompt 被模型执行：</p>
+  <ul>
+    <li>记忆主动召回的触发逻辑</li>
+    <li>分龄化对话长度控制（低龄简短、高龄可扩展）</li>
+    <li>英语分级回复策略</li>
+    <li>讲故事模式下的安全边界拦截（统一拦截恐怖 / 不适龄内容生成）</li>
+  </ul>
+
+  <h2>五、评测体系（从 0 到 1）</h2>
+  <p>V1 最大的问题是能力不可度量。方案设计同步搭建评测体系，使新效果可被验证：</p>
+  <ul>
+    <li><strong>四个评测维度</strong>：写入有效率、召回准确率、适用性正确率、记忆使用有效率，每个维度拆成可量化子项并加权打分；</li>
+    <li><strong>50 条评测集</strong>：覆盖 5 类场景 × 4 档难度，来源混合真实用户问题、边界用例与 BadCase 回流；</li>
+    <li><strong>三层评测流程</strong>：模型自动打分（全量回归）+ 人工抽检（发版前复核）+ 线上反馈回流（点踩 / 追问 / 跳出转化为新题）；</li>
+    <li><strong>调优集与验收集分离</strong>：避免模型"刷榜"，发版决策以验收集成绩为准。</li>
+  </ul>
+
+  <h2>六、项目成果与目标指标</h2>
+  <p>四大模块方案通过技术评审、纳入排期。本次交付物：</p>
+  <ul>
+    <li>四大模块方案（记忆系统 / 英语测评与分级回复 / System Prompt / 评测体系）通过技术评审；</li>
+    <li>沉淀记忆业务规范（3 类记忆定义 + 12 条写入规则 + 4 条冲突规则），形成团队可复用的方法论资产；</li>
+    <li>整理约 100 条 BadCase 样本库、构建 50 条评测集；</li>
+    <li>完成家长端成长看板英语指标定义与界面交互设计。</li>
+  </ul>
+
+  <p><strong>预期目标（对照 V1 基线）：</strong></p>
+  <table>
+    <tr><th>指标</th><th>V1 基线</th><th>目标值</th></tr>
+    <tr><td>对话满意度</td><td>72%</td><td>78%</td></tr>
+    <tr><td>设备端 D7 留存</td><td>22%</td><td>25%</td></tr>
+    <tr><td>家长端 D7 留存</td><td>30%</td><td>33%</td></tr>
+    <tr><td>家长端 D30 留存</td><td>15%</td><td>17%</td></tr>
+  </table>
+
+  <h2>七、复盘</h2>
+  <ul>
+    <li><strong>数据驱动的边界</strong>：本次立项用 500 用户小样本抽样验证，严格来说不替代长期 A/B 实验；小样本的作用是为方案提供方向性证据。方案已设计上线后 A/B 因果验证：设备端开关分组（实验组开三层记忆、对照组关记忆回退 V1）+ 联动模块分批上线避免混叠，主指标双端 D7/D30，过程指标记忆使用有效率——证明留存提升确由记忆带来；</li>
+    <li><strong>方案分批落地</strong>：四大模块不应一次性全排，记忆系统先行、英语分级与看板跟进，按批次迭代，每批由评测集回归兜底；</li>
+    <li><strong>记忆最危险的失败不是没召回</strong>：而是召回了一条看起来相关但已不适用的信息，Agent 仍自信执行（负面迁移）——三层召回过滤的核心防护点；</li>
+    <li><strong>体验连续性 ≠ 关系深度</strong>：该忘的要忘、该沉默时要沉默，给孩子和家长保留控制权——儿童 AI 陪伴的合规与产品底线。</li>
+  </ul>
+
+  <div class="doc-footer">
+    <p>📎 完整 PRD、BadCase 样本库（约 100 条）、评测集（50 条）、记忆业务规范、System Prompt 设计规范与执行版 PRD，可在面试时提供。</p>
+    <p>本案例已对公司名称、产品 IP、未上线功能细节与内部精确数据口径做脱敏处理，保留问题定位逻辑、设计方法论与决策思路。</p>
+  </div>
+
+</div>
+<!-- 返回作品集 -->
+<style>
+.pb-back{position:fixed;right:24px;bottom:24px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:#111;color:#fff;text-decoration:none;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.25);opacity:.9}
+.pb-back:hover{opacity:1}
+</style>
+<a class="pb-back" href="/#work">&larr; 返回作品集</a>
+</body>
+</html>

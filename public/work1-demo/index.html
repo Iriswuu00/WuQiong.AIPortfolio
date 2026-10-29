@@ -1,0 +1,2472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Zhejiang Jinke Culture | AI Tom Bud - Talking Tom & Friends Official</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --seed-bg: #FFFFFF;
+    --seed-fg: #2B6AFF;
+    --seed-primary: #2B6AFF;
+    --seed-accent: #FF2D55;
+    --seed-surface: #FFFFFF;
+    --seed-radius: 24px;
+
+    --primary: #2B6AFF;
+    --primary-light: #5B8FFF;
+    --primary-dark: #1A55E0;
+    --primary-wash: #E8EFFF;
+    --accent: #FF2D55;
+    --accent-light: #FF6B8A;
+    --accent-wash: #FFF0F3;
+    --text-dark: #1A1A2E;
+    --text-body: #444455;
+    --text-muted: #888899;
+    --bg-white: #FFFFFF;
+    --bg-soft: #F5F7FF;
+    --bg-cool: #EEF2FF;
+
+    --white: #FFFFFF;
+    --hero-grad-dark: #1a3a8a;
+    --hero-grad-purple: #6B4BFF;
+    --footer-dark: #0D1B3E;
+    --footer-navy: #1A1A2E;
+    --placeholder: #bbbbbb;
+
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 28px;
+    --radius-pill: 50px;
+
+    --shadow-sm: 0 2px 12px rgba(43,106,255,0.08);
+    --shadow-md: 0 8px 32px rgba(43,106,255,0.10);
+    --shadow-lg: 0 16px 48px rgba(43,106,255,0.14);
+    --shadow-accent: 0 8px 32px rgba(255,45,85,0.12);
+
+    --font-display: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-body: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --nav-height: 72px;
+    scroll-padding-top: calc(var(--nav-height) + 20px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-white);
+    color: var(--text-body);
+    line-height: 1.6;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--text-dark); font-weight: 800; line-height: 1.2; }
+  h1 { font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.02em; }
+  h2 { font-size: clamp(28px, 3.5vw, 40px); letter-spacing: -0.01em; }
+  h3 { font-size: clamp(20px, 2.5vw, 24px); }
+  p { max-width: 65ch; }
+  a { color: var(--primary); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+
+  .container { width: 92%; max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+  /* ===== Navigation ===== */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid rgba(43,106,255,0.06);
+    transition: background 0.3s var(--ease);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--nav-height);
+    padding: 0 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 16px;
+    position: relative;
+    flex-wrap: nowrap;
+  }
+  .nav-logo {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .nav-logo img {
+    height: 100%;
+    width: auto;
+    display: block;
+    border-radius: 0;
+  }
+  
+  /* 移动端汉堡菜单按钮 - 紧邻 Logo 右侧 */
+  .mobile-menu-btn {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    z-index: 101;
+    flex-shrink: 0;
+  }
+  .mobile-menu-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-dark);
+    border-radius: 1px;
+    transition: all 0.3s var(--ease);
+  }
+  .mobile-menu-btn.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-menu-btn.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* 移动端独立购买按钮 */
+  .buy-link-mobile {
+    background: #FF2D55;
+    color: var(--white);
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(255,45,85,0.25);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  .buy-link-mobile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255,45,85,0.35);
+    background: #ff1f4b;
+    text-decoration: none;
+  }
+  
+  /* 桌面端购买按钮样式 */
+  .nav-desktop-buy {
+    flex-shrink: 0;
+  }
+  .nav-desktop-buy .buy-link {
+    background: #FF2D55;
+    color: var(--white);
+    padding: 8px 20px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(255,45,85,0.25);
+    white-space: nowrap;
+  }
+  .nav-desktop-buy .buy-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255,45,85,0.35);
+    background: #ff1f4b;
+    text-decoration: none;
+  }
+  .nav-desktop-buy .buy-link:active {
+    transform: translateY(1px);
+  }
+
+  /* 桌面端导航链接样式（水平） */
+  .nav-links {
+    display: flex;
+    gap: clamp(12px, 2.5vw, 32px);
+    list-style: none;
+    align-items: center;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .nav-links a {
+    font-size: clamp(12px, 1.2vw, 14px);
+    font-weight: 600;
+    color: var(--text-body);
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--primary); text-decoration: none; }
+
+  /* ===== Responsive sizing helper for tablet scaling gaps ===== */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .nav-links {
+      gap: clamp(10px, 1.5vw, 18px);
+    }
+    .nav-links a {
+      font-size: 13px;
+    }
+    .nav-desktop-buy .buy-link {
+      padding: 6px 14px;
+      font-size: 13px;
+    }
+  }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .btn-primary {
+    height: 52px;
+    padding: 0 36px;
+    font-size: 16px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: var(--white);
+    box-shadow: 0 6px 24px rgba(43,106,255,0.25);
+    border: none;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(43,106,255,0.3); }
+  .btn-primary:active { transform: translateY(1px); }
+  
+  .guestbook-card .btn-primary,
+  #guestbookForm .btn-primary {
+    background: #2B6AFF;
+    box-shadow: 0 6px 18px rgba(43,106,255,0.35);
+  }
+  .guestbook-card .btn-primary:hover,
+  #guestbookForm .btn-primary:hover {
+    background: #1a55e0;
+    box-shadow: 0 10px 28px rgba(43,106,255,0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    height: 52px;
+    padding: 0 36px;
+    font-size: 16px;
+    border-radius: var(--radius-pill);
+    background: rgba(255,255,255,0.15);
+    color: var(--white);
+    border: 2px solid rgba(255,255,255,0.4);
+    backdrop-filter: blur(8px);
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.6); text-decoration: none; }
+
+  .btn-large {
+    height: 60px;
+    padding: 0 48px;
+    font-size: 18px;
+  }
+
+  /* ===== Background pattern (shared) ===== */
+  .bg-pattern {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-dots::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(43,106,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  /* ===== Section spacing ===== */
+  .section { 
+    padding: clamp(40px, 8vw, 80px) 0; 
+    position: relative; 
+    margin: 0 auto;
+    width: 100%;
+  }
+  .section-header { 
+    text-align: center; 
+    margin: 0 auto clamp(20px, 4vw, 40px); 
+    max-width: 800px; 
+    position: relative; 
+    z-index: 1;
+    padding: 0 16px;
+  }
+  .section-header h2 { margin-bottom: 16px; }
+  .section-header p { 
+    font-size: clamp(15px, 2vw, 17px); 
+    color: var(--text-muted); 
+    margin: 0 auto; 
+    max-width: 800px; 
+    line-height: 1.8;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 16px;
+  }
+  .eyebrow-blue { background: var(--primary-wash); color: var(--primary); }
+  .eyebrow-pink { background: var(--accent-wash); color: var(--accent); }
+  .eyebrow-white { background: rgba(255,255,255,0.2); color: var(--white); backdrop-filter: blur(4px); }
+
+  /* ===== Wave Dividers ===== */
+  .wave-div {
+    position: relative;
+    height: 0;
+    z-index: 1;
+  }
+  .wave-hero-product {
+    background: linear-gradient(to bottom, rgba(26,26,46,0.06), var(--bg-white));
+    clip-path: ellipse(95% 100% at 50% 0%);
+  }
+  .wave-product-chars {
+    background: linear-gradient(to bottom, var(--bg-white), var(--bg-white));
+    clip-path: ellipse(95% 100% at 50% 0%);
+  }
+  .wave-chars-company {
+    background: linear-gradient(to bottom, var(--bg-white), var(--bg-white));
+    clip-path: ellipse(95% 100% at 50% 0%);
+    height: 40px;
+  }
+  .wave-company-awards {
+    background: linear-gradient(to bottom, var(--bg-white), var(--bg-white));
+    clip-path: ellipse(95% 100% at 50% 0%);
+  }
+  .wave-awards-specs {
+    background: linear-gradient(to bottom, var(--bg-white), var(--bg-white));
+    clip-path: ellipse(95% 100% at 50% 0%);
+  }
+  .wave-specs-cta {
+    background: linear-gradient(to bottom, var(--bg-white), var(--bg-white));
+    clip-path: ellipse(95% 100% at 50% 0%);
+  }
+  .wave-cta-footer {
+    background: linear-gradient(to bottom, var(--bg-white), var(--bg-white));
+    clip-path: ellipse(95% 100% at 50% 0%);
+  }
+
+  /* ===== Scroll reveal animations ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+  .fade-in-delay-4 { transition-delay: 0.4s; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #1a1a2e;
+    padding-top: var(--nav-height);
+  }
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .hero-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero-deco {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hero-deco-3 {
+    width: 200px; height: 200px;
+    top: 30%; left: 15%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    padding: clamp(40px, 10vw, 120px) 0 clamp(40px, 10vw, 80px);
+    width: 100%;
+  }
+  .hero-text {
+    color: var(--white);
+    max-width: 800px;
+    padding: 0 16px;
+  }
+  .hero-text h1 {
+    color: var(--white);
+    margin-bottom: 16px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    font-size: clamp(36px, 8vw, 72px);
+    letter-spacing: -0.02em;
+  }
+  .hero-text p {
+    font-size: clamp(16px, 3vw, 20px);
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-start; }
+
+  /* ===== Product Section ===== */
+  .product-section {
+    background: var(--bg-white);
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(16px, 3vw, 28px);
+    padding: 0 16px;
+  }
+  .product-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(43,106,255,0.06);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+  }
+  .product-card-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .product-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .product-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(15px, 2vw, 16px);
+    font-weight: 700;
+    color: var(--text-dark);
+    padding: 16px 20px 4px;
+    text-align: center;
+  }
+  .product-card-desc {
+    font-size: clamp(12px, 1.8vw, 13px);
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding: 0 20px 20px;
+    flex-grow: 1;
+  }
+
+  /* ===== Highlight Sections ===== */
+  .highlight-section {
+    background: var(--bg-white);
+    padding: clamp(40px, 8vw, 80px) 0;
+  }
+  .highlight-section .section-header p.highlight-subtitle {
+    position: relative;
+    display: inline-block;
+    font-size: clamp(14px, 2vw, 15px);
+    font-weight: 600;
+    color: var(--accent);
+    margin: 8px auto 12px;
+    padding-left: 16px;
+    max-width: none;
+  }
+  .highlight-section .section-header p.highlight-subtitle::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .highlight-section .section-header p.highlight-desc {
+    font-size: clamp(15px, 2vw, 16px);
+    color: var(--text-body);
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto 32px;
+    text-align: justify;
+    padding: 0 16px;
+  }
+  .highlight-image {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  .highlight-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-lg);
+  }
+  .highlight-images-row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 20px;
+    align-items: center;
+    padding: 0 16px;
+  }
+  .highlight-images-row img {
+    width: auto;
+    height: 320px;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+  }
+
+  /* ===== Characters ===== */
+  .characters-section {
+    background: var(--bg-white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .family-showcase {
+    display: block;
+    text-align: center;
+    padding: 0 16px;
+  }
+  .family-image {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto 32px;
+    display: block;
+  }
+  .family-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .family-intro {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 16px;
+  }
+  .family-intro p {
+    font-size: clamp(15px, 2vw, 16px);
+    color: var(--text-body);
+    line-height: 1.8;
+    text-align: justify;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* ===== Company Section ===== */
+  .company-section {
+    background: var(--bg-white);
+    position: relative;
+    overflow: hidden;
+  }
+  .company-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .company-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(8px);
+  }
+  .company-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.88);
+    pointer-events: none;
+  }
+  .company-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 16px;
+  }
+  .company-content p {
+    font-size: clamp(15px, 2vw, 16px);
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    padding: 0 16px;
+  }
+  .company-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: clamp(16px, 4vw, 32px);
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(43,106,255,0.08);
+    padding: 48px 16px 0;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 5vw, 48px);
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-unit {
+    font-size: 0.5em;
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .stat-label {
+    font-size: clamp(12px, 2vw, 13px);
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ===== Awards ===== */
+  .awards-section {
+    background: var(--bg-white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .awards-central {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+  }
+  .awards-center-image {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto 56px;
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(43,106,255,0.08);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+  }
+  .awards-center-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-lg);
+  }
+  .awards-center-image svg { width: 56px; height: 56px; opacity: 0.4; color: var(--accent); }
+  .awards-center-image span { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+
+  .awards-orbit {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(8px, 2vw, 10px);
+    width: 100%;
+    max-width: 1100px;
+    padding: 0 16px;
+  }
+  .award-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 18px);
+    background: var(--bg-white);
+    border-radius: var(--radius-pill);
+    font-size: clamp(12px, 2vw, 14px);
+    font-weight: 600;
+    color: var(--text-body);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(43,106,255,0.06);
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    width: auto;
+    flex-shrink: 0;
+  }
+  .award-chip:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .award-chip::before {
+    content: "";
+    width: 8px; height: 8px; min-width: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .award-chip:nth-child(odd)::before { background: var(--primary); }
+  .award-chip:nth-child(even)::before { background: var(--accent); }
+
+  /* ===== Specs Section ===== */
+  .specs-section {
+    background: var(--bg-white);
+  }
+  .specs-table-wrap {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 5vw, 40px);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(43,106,255,0.06);
+    overflow-x: auto;
+    position: relative;
+    margin: 0 16px;
+  }
+  .specs-table-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .specs-table { width: 100%; border-collapse: collapse; font-size: clamp(12px, 2vw, 14px); }
+  .specs-table td { padding: clamp(10px, 2vw, 12px) clamp(12px, 3vw, 20px); text-align: left; border-bottom: 1px solid var(--bg-soft); }
+  .specs-table tr:last-child td { border-bottom: none; }
+  .specs-table td:first-child { font-weight: 600; color: var(--text-dark); width: 35%; text-align: center; }
+  .specs-table td:last-child { color: var(--text-body); }
+
+  /* ===== CTA Section ===== */
+  .cta-section {
+    background: var(--bg-white);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-band {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: clamp(40px, 10vw, 80px) clamp(24px, 6vw, 48px);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(43,106,255,0.08);
+    box-shadow: var(--shadow-md);
+    margin: 0 16px;
+  }
+  .cta-band h2 { color: var(--text-dark); margin: 0 auto 16px; max-width: 800px; }
+  .cta-band p { font-size: clamp(15px, 2vw, 17px); color: var(--text-body); margin: 0 auto 36px; max-width: 800px; }
+
+  /* ===== Footer ===== */
+  .footer {
+    background: var(--bg-white);
+    padding: clamp(40px, 8vw, 56px) 0 0;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(43,106,255,0.06);
+  }
+  
+  /* ===== Refactored Footer Layout (Desktop) ===== */
+  .footer-top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 40px;
+    padding: 0 16px 40px;
+  }
+
+  .footer-logo-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(16px, 3vw, 24px);
+    width: 100%;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(43,106,255,0.06);
+    padding-bottom: 24px;
+    margin-bottom: 8px;
+  }
+  .footer-logo-img {
+    height: clamp(40px, 5vw, 48px);
+    width: auto;
+    display: block;
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+  .footer-tagline {
+    font-size: clamp(11px, 2vw, 12px);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+    text-align: left;
+    max-width: 800px;
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .footer-content-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    gap: 32px;
+  }
+
+  .footer-contact-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .footer-contact-block .label {
+    font-size: clamp(10px, 2vw, 11px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .footer-email-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-contact-block a {
+    font-size: clamp(14px, 2vw, 15px);
+    font-weight: 600;
+    color: var(--text-body);
+    transition: color 0.2s;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .footer-contact-block a:hover { color: var(--primary); text-decoration: none; }
+
+  .footer-social-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .footer-social-block .label {
+    font-size: clamp(10px, 2vw, 11px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .footer-social-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .social-icon-link {
+    width: clamp(36px, 5vw, 40px);
+    height: clamp(36px, 5vw, 40px);
+    border-radius: 50%;
+    background: var(--bg-soft);
+    border: 1px solid rgba(43,106,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .social-icon-link:hover {
+    background: var(--primary-wash);
+    color: var(--primary);
+    border-color: var(--primary);
+    text-decoration: none;
+  }
+  .social-icon-link:focus-visible {
+    outline: 3px solid rgba(43,106,255,0.22);
+    outline-offset: 3px;
+  }
+  .social-icon-link svg { width: clamp(18px, 3vw, 20px); height: clamp(18px, 3vw, 20px); }
+  
+  .footer-bottom {
+    border-top: 1px solid rgba(43,106,255,0.06);
+    padding: 18px 0;
+    text-align: center;
+    margin: 0 16px;
+  }
+  .footer-bottom small { font-size: clamp(11px, 2vw, 12px); color: var(--text-muted); }
+
+  /* ===== Modal ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13,27,62,0.5);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease);
+  }
+  .modal-overlay.open { display: flex; opacity: 1; }
+  .modal {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 8vw, 44px);
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 24px 64px rgba(43,106,255,0.2);
+    transform: translateY(16px);
+    transition: transform 0.3s var(--ease);
+    position: relative;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-soft);
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .modal-close:hover { background: var(--primary-wash); color: var(--text-dark); }
+  .modal h3 { margin-bottom: 8px; text-align: center; }
+  .modal-sub { text-align: center; font-size: clamp(13px, 2vw, 14px); color: var(--text-muted); margin-bottom: 28px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: clamp(12px, 2vw, 13px); font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+  .form-input {
+    width: 100%;
+    height: clamp(44px, 6vw, 50px);
+    padding: 0 20px;
+    font-size: clamp(14px, 2vw, 15px);
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--text-body);
+    background: var(--bg-soft);
+    border: 2px solid transparent;
+    border-radius: var(--radius-pill);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input::placeholder { color: var(--placeholder); }
+  .form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(43,106,255,0.1);
+    background: var(--bg-white);
+  }
+  .form-submit { width: 100%; margin-top: 8px; }
+
+  /* ===== 订阅区样式 ===== */
+  .subscribe-section {
+    background: var(--bg-white);
+    padding: clamp(40px, 10vw, 80px) 0;
+  }
+  .subscribe-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(43,106,255,0.08);
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    padding: clamp(32px, 6vw, 52px) clamp(24px, 6vw, 48px);
+  }
+  .subscribe-card h2 {
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: var(--text-dark);
+  }
+  .subscribe-card p {
+    font-size: clamp(15px, 2vw, 16px);
+    color: var(--text-muted);
+    margin-bottom: 36px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  .subscribe-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .subscribe-input {
+    flex: 1 1 280px;
+    min-width: min(100%, 280px);
+    height: 52px;
+    padding: 0 24px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    background: var(--bg-soft);
+    border: 2px solid transparent;
+    border-radius: var(--radius-pill);
+    outline: none;
+    transition: 0.2s;
+  }
+  .subscribe-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(43,106,255,0.1);
+    background: var(--bg-white);
+  }
+  .subscribe-btn {
+    height: 52px;
+    padding: 0 32px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 18px rgba(43,106,255,0.3);
+  }
+  .subscribe-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(43,106,255,0.35);
+  }
+  .subscribe-btn:active {
+    transform: translateY(1px);
+  }
+  .subscribe-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 24px;
+  }
+
+  /* ===== 响应式断点 ===== */
+  @media (max-width: 991px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-product { order: -1; }
+    .hero-product-glow { width: 320px; height: 320px; }
+    .carousel-wrapper::before, .carousel-wrapper::after { width: 40px; }
+    .highlight-images-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .highlight-images-row img {
+      height: auto;
+      max-height: 300px;
+    }
+  }
+
+  /* 移动端专用样式 */
+  @media (max-width: 767px) {
+    :root {
+      --nav-height: 64px;
+    }
+    body {
+      overflow-x: hidden;
+    }
+    .container {
+      width: 100%;
+      padding: 0 20px;
+    }
+    .nav-inner {
+      height: var(--nav-height);
+      padding: 0 14px;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .nav-logo {
+      height: 40px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 44vw;
+      margin: 0;
+      z-index: 101;
+    }
+    .nav-logo img {
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .mobile-menu-btn {
+      display: flex;
+      width: 32px;
+      height: 32px;
+      padding: 4px;
+      gap: 4px;
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .mobile-menu-btn span {
+      width: 22px;
+      margin: 0 auto;
+    }
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+    .nav-desktop-buy {
+      display: none;
+    }
+    .buy-link-mobile {
+      padding: 7px 14px;
+      font-size: 13px;
+      margin-left: 0;
+      position: relative;
+      z-index: 101;
+    }
+    /* 移动端下拉菜单样式（不再全屏） */
+    .nav-links {
+      position: absolute;
+      top: calc(var(--nav-height) + 8px);
+      left: 12px;
+      right: 12px;
+      background: var(--bg-white);
+      backdrop-filter: blur(0);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 8px 0;
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+      border: 1px solid rgba(43,106,255,0.08);
+      z-index: 102;
+      transform: translateY(-20px);
+      opacity: 0;
+      visibility: hidden;
+      transition: transform 0.25s var(--ease), opacity 0.25s var(--ease), visibility 0.25s;
+      background: rgba(255,255,255,0.98);
+    }
+    .nav-links.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    .nav-links li {
+      width: 100%;
+      text-align: center;
+    }
+    .nav-links a {
+      display: block;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-body);
+      border-bottom: 1px solid rgba(43,106,255,0.06);
+    }
+    .nav-links li:last-child a {
+      border-bottom: none;
+    }
+    .nav-links a:hover {
+      background: var(--bg-soft);
+      text-decoration: none;
+    }
+    
+    .section { padding: 44px 0; }
+    .section-header {
+      text-align: left;
+      padding: 0;
+      margin-bottom: 24px;
+    }
+    .section-header h2 {
+      margin-bottom: 12px;
+    }
+    .section-header p {
+      margin: 0;
+      max-width: none;
+      text-align: left;
+      line-height: 1.68;
+    }
+    .hero { 
+      min-height: 80vh; 
+      padding: var(--nav-height) 0 40px; 
+    }
+    .hero-content { 
+      padding: clamp(20px, 8vw, 40px) 0; 
+      align-items: center;
+    }
+    .hero-text { 
+      text-align: left; 
+      width: 100%;
+      padding: 0;
+    }
+    .hero-text p { 
+      margin-left: 0; 
+      margin-right: 0; 
+      line-height: 1.55;
+    }
+    .hero-actions { 
+      justify-content: flex-start; 
+      width: 100%;
+    }
+    .hero-product-glow { width: 260px; height: 260px; }
+    .hero-product-card { width: 200px; height: 240px; }
+    .product-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 0;
+    }
+    .product-card-title {
+      text-align: left;
+      padding: 16px 18px 4px;
+    }
+    .product-card-desc {
+      padding: 0 18px 18px;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .family-showcase {
+      padding: 0;
+      text-align: left;
+    }
+    .family-image {
+      margin-bottom: 24px;
+    }
+    .family-intro {
+      padding: 0;
+      text-align: left;
+    }
+    .family-intro p {
+      text-align: left;
+      margin: 0;
+      line-height: 1.72;
+    }
+    .company-inner {
+      padding: 0;
+      text-align: left;
+    }
+    .company-content p {
+      padding: 0;
+      text-align: left;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .company-stats {
+      gap: 14px;
+      margin-top: 32px;
+      padding: 32px 0 0;
+    }
+    .highlight-section {
+      padding: 44px 0;
+    }
+    .highlight-section .section-header p.highlight-desc {
+      text-align: left;
+      padding: 0;
+      margin: 8px 0 24px;
+      line-height: 1.7;
+    }
+    .highlight-image,
+    .highlight-images-row,
+    .awards-central {
+      padding: 0;
+    }
+    .awards-center-image {
+      margin-bottom: 32px;
+    }
+    .specs-table-wrap {
+      margin: 0;
+      padding: 16px;
+      border-radius: var(--radius-md);
+    }
+    .specs-table {
+      font-size: 13px;
+    }
+    .specs-table td {
+      padding: 10px 8px;
+      line-height: 1.55;
+      vertical-align: top;
+    }
+    .specs-table td:first-child {
+      width: 38%;
+      text-align: left;
+    }
+    .cta-band { 
+      padding: 32px 20px; 
+      margin: 0;
+      text-align: left;
+    }
+    .cta-band p {
+      margin-left: 0;
+      margin-right: 0;
+      line-height: 1.65;
+    }
+    .subscribe-section {
+      padding: 44px 0;
+    }
+    .subscribe-card {
+      text-align: left;
+      padding: 28px 20px;
+      border-radius: var(--radius-md);
+    }
+    .subscribe-card h2 {
+      margin-bottom: 12px;
+    }
+    .subscribe-card p {
+      margin: 0 0 24px;
+      line-height: 1.65;
+      max-width: none;
+    }
+    .subscribe-input {
+      width: 100%;
+      min-width: 0;
+      flex: none;
+      height: 50px;
+      padding: 0 18px;
+    }
+    
+    /* ===== Refactored Footer Mobile Responsive Layout ===== */
+    .footer-top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 0 32px;
+      gap: 24px;
+    }
+    .footer-logo-area {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      max-width: none;
+      border-bottom: 1px solid rgba(43,106,255,0.06);
+      padding-bottom: 20px;
+      margin-bottom: 4px;
+    }
+    .footer-logo-img {
+      height: 38px;
+    }
+    .footer-tagline {
+      line-height: 1.55;
+      min-width: 0;
+    }
+    .footer-content-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      width: 100%;
+    }
+    .footer-contact-block {
+      width: 100%;
+      align-items: flex-start;
+    }
+    .footer-social-block {
+      width: 100%;
+      align-items: flex-start;
+    }
+    .footer-social-row {
+      margin-top: 8px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .subscribe-form {
+      flex-direction: column;
+      gap: 12px;
+      max-width: none;
+      align-items: stretch;
+    }
+    .subscribe-btn {
+      width: 100%;
+      height: 50px;
+    }
+    .subscribe-note {
+      margin-top: 18px;
+    }
+    .cookie-banner {
+      bottom: 16px;
+      width: calc(100% - 32px);
+      padding: 20px;
+    }
+    .cookie-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .cookie-btn {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .subscribe-form {
+      flex-direction: column;
+      align-items: stretch;
+      max-width: none;
+    }
+    .subscribe-input {
+      width: 100%;
+      min-width: 0;
+      flex: none;
+    }
+    .subscribe-btn {
+      width: 100%;
+    }
+  }
+
+  /* 桌面端专用样式 (min-width: 768px) */
+  @media (min-width: 768px) {
+    .mobile-menu-btn,
+    .buy-link-mobile {
+      display: none;
+    }
+    .nav-desktop-buy {
+      display: flex;
+    }
+    .nav-inner {
+      justify-content: flex-start;
+    }
+    .nav-logo {
+      margin-right: auto;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    .nav-links {
+      margin-left: 0;
+    }
+    .nav-desktop-buy {
+      margin-left: 24px;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .hero {
+      min-height: 70vh;
+    }
+    .company-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .award-chip {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .specs-table td:first-child {
+      text-align: left;
+      width: 30%;
+    }
+    .specs-table td {
+      padding: 10px 12px;
+    }
+  }
+
+  /* ===== Cookie Consent Banner ===== */
+  .cookie-banner {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translate(-50%, 120%);
+    width: 90%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(43, 106, 255, 0.12);
+    border-radius: var(--radius-md);
+    box-shadow: 0 16px 48px rgba(13, 27, 62, 0.16);
+    padding: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s var(--ease);
+    opacity: 0;
+  }
+  .cookie-banner.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  .cookie-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cookie-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+  .cookie-desc {
+    font-size: 14px;
+    color: var(--text-body);
+    line-height: 1.5;
+  }
+  .cookie-desc a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 700;
+  }
+  .cookie-desc a:hover {
+    color: var(--primary-dark);
+  }
+  .cookie-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .cookie-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .cookie-btn-reject {
+    background: var(--bg-soft);
+    color: var(--text-body);
+    border: 1px solid rgba(43, 106, 255, 0.1);
+  }
+  .cookie-btn-reject:hover {
+    background: rgba(43, 106, 255, 0.05);
+    color: var(--primary);
+  }
+  .cookie-btn-accept {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(43, 106, 255, 0.2);
+  }
+  .cookie-btn-accept:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(43, 106, 255, 0.3);
+  }
+
+  /* ===== Stay in the Loop Modal ===== */
+  .sub-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 27, 62, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease);
+  }
+  .sub-modal-overlay.open {
+    display: flex;
+    opacity: 1;
+  }
+  .sub-modal {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 24px 64px rgba(13, 27, 62, 0.24);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s var(--ease);
+    position: relative;
+    border: 1px solid rgba(43, 106, 255, 0.08);
+  }
+  .sub-modal-overlay.open .sub-modal {
+    transform: scale(1) translateY(0);
+  }
+  .sub-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-soft);
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .sub-modal-close:hover {
+    background: var(--primary-wash);
+    color: var(--text-dark);
+  }
+  .sub-modal-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .sub-modal-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    text-transform: lowercase;
+  }
+  .sub-modal-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .sub-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .sub-modal-input-wrap {
+    position: relative;
+  }
+  .sub-modal-input {
+    width: 100%;
+    height: 52px;
+    padding: 0 20px;
+    font-size: 15px;
+    border-radius: var(--radius-pill);
+    border: 2px solid transparent;
+    background: var(--bg-soft);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  }
+  .sub-modal-input:focus {
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(43, 106, 255, 0.1);
+  }
+  .sub-modal-btn {
+    width: 100%;
+    height: 52px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(43, 106, 255, 0.2);
+  }
+  .sub-modal-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(43, 106, 255, 0.3);
+  }
+
+  /* ===== Alert / Feedback Dialog ===== */
+  .alert-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 27, 62, 0.5);
+    z-index: 11000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease);
+  }
+  .alert-modal-overlay.open {
+    display: flex;
+    opacity: 1;
+  }
+  .alert-modal {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 48px rgba(13, 27, 62, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.25s var(--ease);
+    border: 1px solid rgba(43, 106, 255, 0.08);
+  }
+  .alert-modal-overlay.open .alert-modal {
+    transform: scale(1);
+  }
+  .alert-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .alert-icon-success {
+    background: var(--primary-wash);
+    color: var(--primary);
+  }
+  .alert-icon-error {
+    background: var(--accent-wash);
+    color: var(--accent);
+  }
+  .alert-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+  .alert-text {
+    font-size: 14px;
+    color: var(--text-body);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .alert-btn {
+    width: 120px;
+    height: 40px;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: var(--primary);
+    color: var(--white);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+  }
+  .alert-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<header class="nav" data-component="Navigation" data-od-id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="images/logo.png" alt="Talking Tom & Friends" /></div>
+    
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav data-component="PrimaryNav">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#company">About Us</a></li>
+        <li><a href="#characters">Characters</a></li>
+        <li><a href="#product">Product</a></li>
+        <li><a href="#specs">Specifications</a></li>
+        <li><a href="#guestbook">Stay Updated</a></li>
+      </ul>
+    </nav>
+    
+    <div class="nav-desktop-buy">
+      <a href="https://www.amazon.com/dp/B0EXAMPLE" class="buy-link" target="_blank" rel="noopener noreferrer">Buy Now</a>
+    </div>
+
+    <a href="https://www.amazon.com/dp/B0EXAMPLE" class="buy-link-mobile" target="_blank" rel="noopener noreferrer">Buy Now</a>
+  </div>
+</header>
+
+<main data-component="MainContent">
+  <section class="hero" id="hero" data-component="Hero" data-od-id="hero">
+    <div class="hero-bg">
+      <img src="images/hero-bg.jpg" alt="AI Tom Bud Product Image" />
+    </div>
+    <div class="container hero-content fade-in">
+      <div class="hero-text">
+        <h1>AI Tom Bud</h1>
+        <p>Your personal AI companion.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-div wave-hero-product" aria-hidden="true"></div>
+
+  <section class="section company-section bg-pattern" id="company" data-component="Company" data-od-id="company">
+    <div class="company-bg">
+      <img src="images/company-bg.jpg" alt="" />
+    </div>
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>About Us</h2>
+      </div>
+      <div class="company-inner fade-in fade-in-delay-1">
+        <div class="company-content">
+          <p>Zhejiang Jinke Talking Tom Culture Industry Co., Ltd. was established in June 2007 and listed on the Shenzhen Stock Exchange GEM in May 2015 (Stock Code: 300459). The company is a full-spectrum IP operator centered around the &quot;Talking Tom &amp; Friends&quot; IP, integrating online and offline, entertainment and education, derivatives and theme parks. The company owns the globally renowned &quot;Talking Tom &amp; Friends&quot; IP, driving mobile applications, animation, and film businesses online, while expanding into IP derivatives, licensing, and Talking Tom family parks offline. In recent years, the company has embraced AI and other cutting-edge technologies to continuously innovate interactive scenarios, making strides in family education and cultural entertainment to build an internationally influential cultural brand. To date, the company's products have accumulated over 24 billion downloads worldwide, with peak monthly active users reaching 470 million. The &quot;Talking Tom &amp; Friends&quot; animated series has garnered over 60 billion views globally, covering more than 200 countries and regions, establishing a massive user base and extensive brand influence worldwide.</p>
+          <div class="company-stats">
+            <div class="stat-item">
+              <div class="stat-number">70<span class="stat-unit">+</span></div>
+              <div class="stat-label">Apps Published</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">600<span class="stat-unit">B+</span></div>
+              <div class="stat-label">Video Views</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">240<span class="stat-unit">B+</span></div>
+              <div class="stat-label">App Downloads</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">4.7<span class="stat-unit">B+</span></div>
+              <div class="stat-label">Peak MAU</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-div wave-chars-company" aria-hidden="true"></div>
+
+  <section class="section characters-section" id="characters" data-component="Characters" data-od-id="characters">
+    <div class="container"> 
+      <div class="section-header fade-in">
+        <h2>Talking Tom & Friends</h2>
+        <p>Vibrant companions for every moment of growth</p>
+      </div>
+      <div class="family-showcase fade-in fade-in-delay-1">
+        <div class="family-image">
+          <img src="images/family.png" alt="Talking Tom & Friends" />
+        </div>
+        <div class="family-intro">
+          <p>Talking Tom &amp; Friends is a globally renowned virtual IP character ensemble created by Outfit7. Since the release of its first app in 2010, this joyful family has accompanied hundreds of millions of users worldwide. The core family members include the cheerful Talking Tom, the sweet Angela, the loyal Hank, the studious Ben, the quirky Becca, and the mischievous Ginger. Each character has a distinct personality and unique charm. Empowered by AI technology, they are stepping into real life in brand-new interactive forms, bringing warmer companionship experiences to children and families.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section product-section bg-pattern bg-dots" id="product" data-component="ProductIntro" data-od-id="product">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>AI Tom Bud Highlights</h2>
+        <p>Blending classic IP with cutting-edge AI for warm, intelligent interaction</p>
+      </div>
+      <div class="product-grid fade-in fade-in-delay-1">
+        <div class="product-card">
+          <div class="product-card-img"><img src="images/feature-1.jpg" alt="Skin-Friendly Silicone" /></div>
+          <div class="product-card-title">Skin-Friendly Silicone</div>
+          <div class="product-card-desc">Wrapped in food-grade skin-friendly silicone for a soft, safe touch.</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-img"><img src="images/feature-2.jpg" alt="Sound Localization" /></div>
+          <div class="product-card-title">Sound Localization</div>
+          <div class="product-card-desc">360° omnidirectional sound sensing for precise source direction detection.</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-img"><img src="images/feature-3.jpg" alt="Emotion Sensing" /></div>
+          <div class="product-card-title">Emotion Sensing</div>
+          <div class="product-card-desc">AI recognizes emotional changes in children and responds with warmth.</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-img"><img src="images/feature-4.jpg" alt="Memory" /></div>
+          <div class="product-card-title">Memory</div>
+          <div class="product-card-desc">Continuously learns your child's preferences—the more you chat, the better it understands.</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-img"><img src="images/feature-5.jpg" alt="Interactive Learning" /></div>
+          <div class="product-card-title">Interactive Learning</div>
+          <div class="product-card-desc">Learning through play—developing language, logic, and creativity through conversation.</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-img"><img src="images/feature-6.jpg" alt="AI Smart Chat" /></div>
+          <div class="product-card-title">AI Smart Chat</div>
+          <div class="product-card-desc">Powered by a natural language processing engine—chat like a true friend.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-div wave-product-chars" aria-hidden="true"></div>
+
+  <section class="section highlight-section" id="highlight1">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Emotional Connection</h2>
+        <p>He feels, connects and cares for you</p>
+        <p class="highlight-desc">Tom is more than just smart—he's emotionally aware. With lifelike expressions and responses, he connects like a true friend, bringing warmth and comfort to every moment.</p>
+      </div>
+      <div class="highlight-image fade-in fade-in-delay-1">
+        <img src="images/1.jpg" alt="AI Tom Bud" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section highlight-section" id="highlight2">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Smart Interaction</h2>
+        <p>Learning, chatting, and growing together.</p>
+        <p class="highlight-desc">Powered by AI, Tom Bud listens, learns, and adapts. From fun chats to playful learning, every interaction is personalized and engaging. He's also a little teacher in disguise, sneaking in fun facts, storytelling, and math to keep your child curious.</p>
+      </div>
+      <div class="highlight-image fade-in fade-in-delay-1">
+        <img src="images/2.jpg" alt="AI Tom Bud" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section highlight-section" id="highlight3">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Always Here, Always Caring</h2>
+        <p>The joy and growth of accompanying children</p>
+        <p class="highlight-desc">Tom is the perfect addition to your home, offering emotional support, playful learning, and endless entertainment for your child. Whether it's storytime, homework help, or just someone to chat with, Tom is there to brighten their day—every day.</p>
+      </div>
+      <div class="highlight-image fade-in fade-in-delay-1">
+        <img src="images/4.jpg" alt="AI Tom Bud" />
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-div wave-company-awards" aria-hidden="true"></div>
+
+  <section class="section awards-section" id="awards" data-component="Awards" data-od-id="awards">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Awards & Recognition</h2>
+        <p>Every award is a testament to quality and innovation</p>
+      </div>
+      <div class="awards-central fade-in fade-in-delay-1">
+        <div class="awards-center-image" style="padding:0;overflow:hidden;">
+          <img src="images/collection.jpg" alt="Awards Collection" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-div wave-awards-specs" aria-hidden="true"></div>
+
+  <section class="section specs-section bg-pattern" id="specs" data-component="Specs" data-od-id="specs">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2>Specifications</h2>
+        <p>Meticulous craftsmanship for your peace of mind</p>
+      </div>
+      <div class="specs-table-wrap fade-in fade-in-delay-1">
+        <table class="specs-table">
+          <tbody>
+            <tr><td>Product Name</td><td>AI Tom Bud</td></tr>
+            <tr><td>Product Model</td><td>AIR010</td></tr>
+            <tr><td>Dimensions</td><td>Approx. 181mm x 126mm x 120mm</td></tr>
+            <tr><td>Material</td><td>Skin-Friendly Silicone</td></tr>
+            <tr><td>Charging Port</td><td>Type-C</td></tr>
+            <tr><td>Battery</td><td>2000 mAh</td></tr>
+            <tr><td>Rated Voltage</td><td>5V</td></tr>
+            <tr><td>Rated Power</td><td>12.5W</td></tr>
+            <tr><td>Charging Input</td><td>5V==2.5A</td></tr>
+            <tr><td>Standards Compliance</td><td>GB6675.1-2014, GB6675.2-2014, GB6675.3-2014, GB6675.4-2014, GB19865-2005</td></tr>
+            <tr><td>Package Content</td><td>AI Tom Bud, Quick Start Guide, User Manual, Tom's Outfit, Charging Cable</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-div wave-specs-cta" aria-hidden="true"></div>
+
+  <section class="subscribe-section" id="guestbook">
+    <div class="container">
+      <div class="subscribe-card fade-in">
+        <h2>Stay in the Loop</h2>
+        <p>Be the first to know about AI Tom Bud product news, events, and special offers.</p>
+        <form id="subscribeForm" class="subscribe-form" onsubmit="return false;">
+          <input type="email" id="subscriberEmail" class="subscribe-input" placeholder="Your email address" required>
+          <button type="submit" class="subscribe-btn">Subscribe</button>
+        </form>
+        <p class="subscribe-note">We respect your privacy. No spam, unsubscribe anytime.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" data-component="Footer" data-od-id="footer">
+  <div class="container">
+    <div class="footer-top">
+      <!-- First Row: Brand Logo + Brand slogan -->
+      <div class="footer-logo-area">
+        <img src="images/logo.png" alt="Talking Tom & Friends" class="footer-logo-img" />
+        <p class="footer-tagline">Every AI Tom Bud is made with care, combining trusted storytelling with innovative technology - fully authorized and built to delight.</p>
+      </div>
+      
+      <!-- Second Row: Two columns layout (Left: Contact email block, Right: Social media channels) -->
+      <div class="footer-content-row">
+        <!-- Left Column: Contact emails stacked vertically -->
+        <div class="footer-contact-block">
+          <span class="label">Contact</span>
+          <div class="footer-email-list">
+            <a href="mailto:help@jktom.com">help@jktom.com</a>
+            <a href="mailto:xidong-1@jktom.com">xidong-1@jktom.com</a>
+          </div>
+        </div>
+        
+        <!-- Right Column: Social media channels -->
+        <div class="footer-social-block">
+          <span class="label">Official Accounts</span>
+          <div class="footer-social-row">
+            <a href="https://x.com/TalkingTom_AI" class="social-icon-link" title="X" aria-label="X" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@talkingtomairobot" class="social-icon-link" title="TikTok" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.34-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.7.11-3.4.11-5.1z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@TalkingTomAIRobot" class="social-icon-link" title="YouTube" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <small>Talking Tom & Friends associated marks, logos and characters are trademarks of Outfit7 Limited, licensed to Hangzhou Xiaong Network Technology Co., Ltd.<br>© 2010–2026 Outfit7 Limited. All Rights Reserved.</small>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal" aria-hidden="true" onclick="if(event.target===this)closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" data-component="RegisterModal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    <h3 id="modalTitle">Register</h3>
+    <p class="modal-sub">Join the Talking Tom & Friends family and start your fun journey</p>
+    <form onsubmit="event.preventDefault();alert('Registration demo: form submitted');closeModal();">
+      <div class="form-group">
+        <label for="regEmail">Email</label>
+        <input type="email" id="regEmail" class="form-input" placeholder="your@email.com" required />
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" class="form-input" placeholder="At least 8 characters" required />
+      </div>
+      <div class="form-group">
+        <label for="regPassword2">Confirm Password</label>
+        <input type="password" id="regPassword2" class="form-input" placeholder="Enter password again" required />
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Custom Cookie Consent Banner ===== -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-content">
+    <div class="cookie-desc">We use cookies to run this site, measure traffic, and personalize content. You can accept, reject, or manage your privacy choices anytime.<a href="PrivacyPolicy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></div>
+  </div>
+  <div class="cookie-buttons">
+    <button class="cookie-btn cookie-btn-reject" onclick="handleCookieConsent(false)">Reject Non-Essential</button>
+    <button class="cookie-btn cookie-btn-accept" onclick="handleCookieConsent(true)">Accept All</button>
+  </div>
+</div>
+
+<!-- ===== Stay in the Loop Subscription Modal ===== -->
+<div class="sub-modal-overlay" id="subModal" onclick="if(event.target===this)closeSubModal()">
+  <div class="sub-modal" role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
+    <button class="sub-modal-close" onclick="closeSubModal()" aria-label="Close">&times;</button>
+    <div class="sub-modal-header">
+      <h2 class="sub-modal-title" id="subModalTitle">Stay in the Loop</h2>
+      <p class="sub-modal-desc">Be the first to know about AI Tom Bud product news, events, and special offers.</p>
+    </div>
+    <form class="sub-modal-form" id="subForm" onsubmit="handleSubscriptionSubmit(event, 'subModalEmail')">
+      <div class="sub-modal-input-wrap">
+        <input type="text" id="subModalEmail" class="sub-modal-input" placeholder="Your Email Address" autocomplete="off" />
+      </div>
+      <button type="submit" class="sub-modal-btn">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Custom Alert / Feedback Dialog ===== -->
+<div class="alert-modal-overlay" id="alertModal" onclick="if(event.target===this)closeAlertModal()">
+  <div class="alert-modal" role="dialog" aria-modal="true" aria-labelledby="alertTitle">
+    <div class="alert-icon" id="alertIcon">
+      <!-- Icon will be injected by JavaScript -->
+    </div>
+    <h3 class="alert-title" id="alertTitle">Feedback</h3>
+    <p class="alert-text" id="alertText">Message goes here</p>
+    <button class="alert-btn" onclick="closeAlertModal()">OK</button>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    var m = document.getElementById('modal');
+    m.style.display = 'flex';
+    requestAnimationFrame(function() { m.classList.add('open'); });
+    m.setAttribute('aria-hidden', 'false');
+    document.getElementById('regEmail').focus();
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    var m = document.getElementById('modal');
+    m.classList.remove('open');
+    setTimeout(function() {
+      m.style.display = 'none';
+      m.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }, 250);
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // 移动端下拉菜单：点击汉堡按钮 toggle 菜单，点击外部关闭，点击链接关闭
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const navLinks = document.getElementById('navLinks');
+
+  function closeMenu() {
+    if (!navLinks.classList.contains('active')) return;
+    mobileMenuBtn.classList.remove('active');
+    navLinks.classList.remove('active');
+  }
+
+  function openMenu() {
+    if (navLinks.classList.contains('active')) return;
+    mobileMenuBtn.classList.add('active');
+    navLinks.classList.add('active');
+  }
+
+  if (mobileMenuBtn && navLinks) {
+    mobileMenuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (navLinks.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+    
+    // 点击菜单内链接关闭菜单
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => closeMenu());
+    });
+    
+    // 点击页面其他区域关闭菜单（仅移动端有效）
+    document.addEventListener('click', function(event) {
+      if (window.innerWidth <= 767) {
+        if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+          closeMenu();
+        }
+      }
+    });
+  }
+
+  function showToast(text) {
+    const toast = document.createElement("div");
+    toast.innerText = text;
+    toast.style.position = "fixed";
+    toast.style.bottom = "24px";
+    toast.style.left = "50%";
+    toast.style.transform = "translateX(-50%)";
+    toast.style.backgroundColor = "var(--primary)";
+    toast.style.color = "white";
+    toast.style.padding = "10px 28px";
+    toast.style.borderRadius = "40px";
+    toast.style.fontWeight = "600";
+    toast.style.fontSize = "14px";
+    toast.style.zIndex = "999";
+    toast.style.fontFamily = "var(--font-body)";
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2200);
+  }
+
+  // ===== Image Error Fallback =====
+  window.addEventListener('error', function(e) {
+    if (e.target && e.target.tagName === 'IMG') {
+      const img = e.target;
+      if (img.dataset.fallbackTried) return;
+      img.dataset.fallbackTried = "true";
+
+      const alt = img.alt || 'AI Tom Bud';
+      if (img.classList.contains('footer-logo-img') || img.closest('.nav-logo')) {
+        img.src = 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="180" height="50" viewBox="0 0 180 50"><rect width="100%" height="100%" fill="#2B6AFF"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="14" font-weight="800" fill="white">AI Tom Bud</text></svg>`);
+        return;
+      }
+      img.src = 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2B6AFF"/><stop offset="100%" stop-color="#FF2D55"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="18" font-weight="bold" fill="white">${alt}</text></svg>`);
+    }
+  }, true);
+
+  // Trigger image fallback immediately only for images that have already completed loading and failed
+  document.querySelectorAll('img').forEach(img => {
+    if (img.complete && img.naturalWidth === 0) {
+      img.dispatchEvent(new Event('error'));
+    }
+  });
+
+  // ===== Cookie Consent Manager =====
+  function showCookieBanner() {
+    const banner = document.getElementById('cookieBanner');
+    if (banner) {
+      setTimeout(() => {
+        banner.classList.add('show');
+      }, 1000);
+    }
+  }
+
+  // Preserve cookie consent interaction logic completely untouched
+  function handleCookieConsent(acceptedAll) {
+    const banner = document.getElementById('cookieBanner');
+    if (banner) {
+      banner.classList.remove('show');
+    }
+    const choice = acceptedAll ? 'all' : 'essential';
+    localStorage.setItem('cookie_consent_choice', choice);
+    localStorage.setItem('cookie_consent_time', Date.now().toString());
+  }
+
+  function checkCookieConsent() {
+    const choice = localStorage.getItem('cookie_consent_choice');
+    const timestamp = localStorage.getItem('cookie_consent_time');
+    const cookieAgeLimit = 180 * 24 * 60 * 60 * 1000; // 180 days in ms
+
+    if (choice && timestamp) {
+      const age = Date.now() - Number(timestamp);
+      if (age >= cookieAgeLimit) {
+        localStorage.removeItem('cookie_consent_choice');
+        localStorage.removeItem('cookie_consent_time');
+        showCookieBanner();
+      }
+    } else {
+      showCookieBanner();
+    }
+  }
+
+  // ===== Custom Alert Modals =====
+  function showAlertModal(type, title, text) {
+    const overlay = document.getElementById('alertModal');
+    const iconContainer = document.getElementById('alertIcon');
+    const titleEl = document.getElementById('alertTitle');
+    const textEl = document.getElementById('alertText');
+
+    if (!overlay || !iconContainer || !titleEl || !textEl) return;
+
+    titleEl.innerText = title;
+    textEl.innerText = text;
+
+    if (type === 'success') {
+      iconContainer.className = 'alert-icon alert-icon-success';
+      iconContainer.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    } else {
+      iconContainer.className = 'alert-icon alert-icon-error';
+      iconContainer.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+    }
+
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => {
+      overlay.classList.add('open');
+    });
+  }
+
+  function closeAlertModal() {
+    const overlay = document.getElementById('alertModal');
+    if (overlay) {
+      overlay.classList.remove('open');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 250);
+    }
+  }
+
+  // ===== Stay in the Loop Subscription Modal =====
+  function openSubModal() {
+    const modal = document.getElementById('subModal');
+    if (modal) {
+      modal.style.display = 'flex';
+      requestAnimationFrame(() => {
+        modal.classList.add('open');
+      });
+      const input = document.getElementById('subModalEmail');
+      if (input) input.focus();
+    }
+  }
+
+  function closeSubModal() {
+    const modal = document.getElementById('subModal');
+    if (modal) {
+      modal.classList.remove('open');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 250);
+    }
+  }
+
+  // ===== Email Subscription Core Logic =====
+  const backupFailureMessage = "We could not process your subscription at this time. Please try again later.";
+
+  function validateAndSubscribe(emailVal) {
+    const email = (emailVal || '').trim();
+    
+    if (!email) {
+      return {
+        success: false,
+        errorType: 'empty',
+        message: 'Please enter a valid email address.'
+      };
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return {
+        success: false,
+        errorType: 'format',
+        message: 'Please enter a valid email address (e.g., name@example.com).'
+      };
+    }
+
+    let subscribedList = [];
+    try {
+      const stored = localStorage.getItem('subscribed_emails');
+      if (stored) {
+        subscribedList = JSON.parse(stored);
+      }
+    } catch (e) {
+      subscribedList = [];
+    }
+
+    if (!Array.isArray(subscribedList)) {
+      subscribedList = [];
+    }
+
+    if (subscribedList.map(item => item.toLowerCase()).includes(email.toLowerCase())) {
+      return {
+        success: false,
+        errorType: 'duplicate',
+        message: 'This Email Has Already Subscribed.'
+      };
+    }
+
+    subscribedList.push(email);
+    localStorage.setItem('subscribed_emails', JSON.stringify(subscribedList));
+
+    return {
+      success: true,
+      message: 'Thank you for subscribing! We will send updates to your mailbox.'
+    };
+  }
+
+  function handleSubscriptionSubmit(e, inputId) {
+    if (e) e.preventDefault();
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    const result = validateAndSubscribe(input.value);
+    if (result.success) {
+      closeSubModal();
+      showAlertModal('success', 'Thank You For Subscribing', result.message);
+      input.value = '';
+    } else {
+      showAlertModal('error', 'Subscription Failed', result.message);
+    }
+  }
+
+  function overrideGuestbookForm() {
+    const form = document.getElementById('subscribeForm');
+    if (!form) return;
+
+    form.setAttribute('novalidate', 'true');
+    const emailInput = document.getElementById('subscriberEmail');
+    if (emailInput) {
+      emailInput.removeAttribute('required');
+    }
+
+    const newForm = form.cloneNode(true);
+    form.parentNode.replaceChild(newForm, form);
+
+    newForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('subscriberEmail');
+      if (!input) return;
+
+      const result = validateAndSubscribe(input.value);
+      if (result.success) {
+        showAlertModal('success', 'Thank You For Subscribing', result.message);
+        input.value = '';
+      } else {
+        showAlertModal('error', 'Subscription Failed', result.message);
+      }
+    });
+  }
+
+  // Initialize everything
+  document.addEventListener('DOMContentLoaded', function() {
+    checkCookieConsent();
+    overrideGuestbookForm();
+  });
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    checkCookieConsent();
+    overrideGuestbookForm();
+  }
+</script>
+<!-- 返回作品集 -->
+<style>
+.pb-back{position:fixed;right:24px;bottom:24px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:#111;color:#fff;text-decoration:none;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.25);opacity:.9}
+.pb-back:hover{opacity:1}
+</style>
+<a class="pb-back" href="/#work">&larr; 返回作品集</a>
+</body>
+</html>

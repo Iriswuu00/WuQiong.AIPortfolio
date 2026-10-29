@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宠物电商 AIGC 营销图片提效平台｜文生图 + 垂类微调 · 案例</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 48px 24px 80px;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    color: #1F2329; background: #FFFFFF; line-height: 1.75; font-size: 15px;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  .doc-header { padding-bottom: 20px; border-bottom: 1px solid #E5E6EB; margin-bottom: 8px; }
+  .doc-title { font-size: 26px; font-weight: 700; line-height: 1.4; margin: 0 0 10px; }
+  .doc-subtitle { color: #646A73; font-size: 14px; margin: 0 0 14px; line-height: 1.6; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .tag { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 4px; background: #E8F0FF; color: #1456F0; line-height: 20px; }
+  .tag.grey { background: #F0F1F3; color: #646A73; }
+  h2 { font-size: 20px; font-weight: 700; margin: 36px 0 14px; line-height: 1.4; padding-top: 8px; }
+  h3 { font-size: 16px; font-weight: 600; margin: 22px 0 8px; line-height: 1.4; }
+  p { margin: 0 0 12px; }
+  ul, ol { padding-left: 22px; margin: 0 0 12px; }
+  li { margin-bottom: 6px; }
+  ul li::marker { color: #1456F0; }
+  strong { font-weight: 600; }
+  blockquote {
+    margin: 14px 0; padding: 12px 16px; background: #F5F6F7;
+    border-left: 3px solid #1456F0; color: #4E5969; font-size: 14px; line-height: 1.7;
+    border-radius: 0 4px 4px 0;
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  th, td { border: 1px solid #BABEC4; padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #FAFBFC; font-weight: 600; }
+  .num { color: #1456F0; font-weight: 600; }
+  hr { border: none; border-top: 1px solid #E5E6EB; margin: 28px 0; }
+  .doc-footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid #E5E6EB; color: #8A8F99; font-size: 13px; line-height: 1.7; }
+  .step-chain { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 16px; font-size: 13px; color: #4E5969; }
+  .step-chain .node { background: #F0F1F3; padding: 4px 10px; border-radius: 4px; }
+  .step-chain .arrow { color: #BABEC4; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="doc-header">
+    <h1 class="doc-title">宠物电商 AIGC 营销图片提效平台｜文生图 + 垂类微调</h1>
+    <p class="doc-subtitle">宠物电商代运营场景下，营销物料长期依赖实拍 + 修图，成本高、周期长、宠物模特不可控；搭建基于开源模型垂类微调的 AIGC 出图工作台，让零设计基础的运营一键产出场景化商品图。</p>
+    <div class="meta-row">
+      <span class="tag">AI 产品经理 · 6 人团队</span>
+      <span class="tag grey">2025.02–2025.11</span>
+      <span class="tag grey">已上线并跑通业务闭环</span>
+      <span class="tag grey">案例已脱敏</span>
+    </div>
+  </div>
+
+  <h2>一、项目背景</h2>
+  <p>宠物电商代运营团队每月需产出数百张营销素材，覆盖商品上新、活动促销、社媒投放。传统生产链路是线下棚拍 + 设计师修图：棚拍场地、摄影师、宠物模特按次计费，单组素材成本数千元；猫咪不配合拍摄导致周期不可控、废片率高；每张图抠图、调色、合成场景需熟练设计师 30–60 分钟；不同批次出图风格不统一，品牌视觉碎片化。</p>
+  <p>目标是用 AIGC 替代实拍与修图环节，让零设计基础的运营能稳定产出场景化商品图。</p>
+
+  <blockquote>
+    <strong>核心判断：</strong>不做通用绘图平台，做<strong>宠物电商营销素材场景内</strong>的提效工具。用风格固化替代自由 Prompt，用垂类微调替代通用模型，让零设计基础的运营能稳定出图。
+  </blockquote>
+
+  <h2>二、目标用户与核心场景</h2>
+  <table>
+    <tr><th style="width:120px;">角色</th><th>使用场景与诉求</th></tr>
+    <tr><td>运营人员</td><td>零设计基础，日常高频使用；诉求是快速出图、操作简单、风格稳定、商品不变形</td></tr>
+  </table>
+
+  <p><strong>两个核心场景</strong>：</p>
+  <ul>
+    <li><strong>商品上新场景化主图</strong>：拿到白底图，选择"自然光影"风格一键生成详情页场景图；</li>
+    <li><strong>社媒种草图</strong>：选择"趣味萌宠"风格生成小红书/抖音投放图。</li>
+  </ul>
+
+  <h2>三、问题定位与关键决策</h2>
+
+  <h3>3.1 方向选择：从图生图转向文生图 + 垂类微调</h3>
+  <p>初期先验证图生图方案（Edge to Cat 类迁移），现场调研运营后发现两个不匹配：手绘输入门槛高（运营不会画）、商品重绘易变形（结构对不齐）。基于验证结论确定新架构：<strong>文生图 + 垂类微调</strong>，配合 ControlNet 锁结构，从输入侧绕开手绘门槛，从模型侧解决变形。</p>
+
+  <h3>3.2 为什么用风格固化替代自由 Prompt</h3>
+  <p>自由 Prompt 文生图的问题是同一 Prompt 多次生成风格差异大、出图不稳定。方案是沉淀<strong>两个高优风格 LoRA</strong>，以风格模板形式提供给运营选择：</p>
+  <ul>
+    <li><strong>自然光影</strong>：平替线下棚拍，主图场景化；</li>
+    <li><strong>趣味萌宠</strong>：服务社媒种草，趣味化视觉。</li>
+  </ul>
+  <p>运营侧只选风格、不写 Prompt，复杂参数黑盒化。用风格固化解决文生图架构下出图不稳定的问题。</p>
+
+  <h3>3.3 为什么用 ControlNet + 局部重绘</h3>
+  <p>原生 SD 直接重绘商品图，特征保持率仅 50–60%，商品变形是最高频 badcase。迭代路径：</p>
+  <div class="step-chain">
+    <span class="node">原生 SD 重绘（50–60%）</span><span class="arrow">→</span>
+    <span class="node">+ ControlNet Canny 锁边缘（70%+）</span><span class="arrow">→</span>
+    <span class="node">+ 局部重绘 + 反向蒙版（80%+）</span><span class="arrow">→</span>
+    <span class="node">+ LoRA 垂类微调（90%+）</span><span class="arrow">→</span>
+    <span class="node">+ ControlNet Seg 结构约束（稳定 90%+）</span>
+  </div>
+  <p>每一步解决一类高频 badcase，迭代后必须通过评测集回归。外形轮廓权重最高（40 分），因为形状变了商品就不是那个商品。</p>
+
+  <h3>3.4 为什么参数对运营黑盒化</h3>
+  <p>运营零设计基础，开放 Steps、CFG、采样器等参数只会导致误操作和出图波动。方案是固定种子、Steps、CFG、采样器，只暴露风格模板选择。参数固化带来两个效果：出图稳定性提升、风格一致性 +15pp。</p>
+
+  <h3>3.5 评测体系为什么以人工抽检为核心</h3>
+  <p>"商品变不变形""风格统不统一"涉及主观判断，自动化指标（CLIP Score、图像清晰度）测不准。方案是三层混合评测：客观指标自动监控（成功率、耗时、异常告警）、人工抽检定质量（商品特征保持率、风格一致性）、业务全量标注（直出免修、badcase 分类）。人工抽检是质量最终裁判。</p>
+
+  <h2>四、解决方案</h2>
+
+  <h3>4.1 全自动出图工作流</h3>
+  <div class="step-chain">
+    <span class="node">运营上传商品白底图</span><span class="arrow">→</span>
+    <span class="node">U-Net 自动去背景</span><span class="arrow">→</span>
+    <span class="node">运营选择风格模板</span><span class="arrow">→</span>
+    <span class="node">ControlNet 提取边缘与分割</span><span class="arrow">→</span>
+    <span class="node">SD + LoRA 局部重绘生成</span><span class="arrow">→</span>
+    <span class="node">后处理（统一尺寸格式）</span><span class="arrow">→</span>
+    <span class="node">运营预览下载或标注 badcase</span>
+  </div>
+
+  <h3>4.2 风格库与垂类 LoRA</h3>
+  <ul>
+    <li>每个风格 20–30 张高质量商品图训练；</li>
+    <li>训练数据经 U-Net 去背景、统一尺寸、打标；</li>
+    <li>每次训练生成版本号，记录数据、参数、评测结果，旧版保留可回滚；</li>
+    <li>发布标准：评测集回归通过（商品特征保持率 ≥90%、风格一致性 ≥85%）。</li>
+  </ul>
+
+  <h3>4.3 工作台前端</h3>
+  <p>Web 端，四个页面：生成页（上传、选风格、结果）、历史记录（筛选下载）、风格模板页、数据看板（PM/算法可见出图量、评测指标、badcase 分类）。运营不开放模型参数与训练数据权限。</p>
+
+  <h3>4.4 BadCase 数据飞轮</h3>
+  <p>运营下载时标注可用/不可用及问题类型（变形、纹理丢失、风格跑偏、背景错乱、配色偏差等），每周汇总分类；PM 定位高频问题，算法针对性优化（LoRA 重训、ControlNet 调整、工作流修改、Prompt 优化），50 条评测集离线回归，指标不下降则发布，修正样本回流评测集。闭环周期 2–4 周一轮。</p>
+
+  <h2>五、评测体系</h2>
+
+  <h3>5.1 评测指标</h3>
+  <table>
+    <tr><th>指标</th><th>评测方式</th><th>目标</th><th>实际</th></tr>
+    <tr><td>商品特征保持率</td><td>人工抽检（100 张/月，3 人标注）</td><td>≥80%</td><td>≥90%（超预期）</td></tr>
+    <tr><td>风格一致性</td><td>人工抽检（50 张/月，3 人标注）</td><td>≥75%</td><td>≥85%（超预期）</td></tr>
+    <tr><td>商用可用率（含轻修后）</td><td>运营估算 + 反馈</td><td>≥90%</td><td>约 70%（未达预期）</td></tr>
+  </table>
+  <p>特征保持率与风格一致性不达标，图一定不可用；但这两个达标不代表一定商用可用（还可能构图不好、光影奇怪），所以最终由运营人工终审。商用可用率因修图后数据回传不完整，作为参考值不设硬门槛；直出免修量（200+ 张/月）是精确可统计的硬指标。</p>
+
+  <h3>5.2 50 条标准评测集</h3>
+  <ul>
+    <li>按品类：猫粮 20 条、猫用品 15 条、宠物玩具 10 条、其他 5 条；</li>
+    <li>按风格：自然光影 25 条、趣味萌宠 25 条；</li>
+    <li>按难度：简单（单主体白底）30 条、中等（带配件）15 条、复杂（多元素）5 条；</li>
+    <li>每条含原图、期望风格、标准合格输出、评测维度权重；</li>
+    <li>用于离线回归，与线上抽检不重叠。</li>
+  </ul>
+
+  <h3>5.3 评测运转闭环</h3>
+  <div class="step-chain">
+    <span class="node">每次生成自动记录客观指标</span><span class="arrow">→</span>
+    <span class="node">运营全量标注直出免修/badcase</span><span class="arrow">→</span>
+    <span class="node">月度人工抽检特征/风格</span><span class="arrow">→</span>
+    <span class="node">PM 定位高频问题</span><span class="arrow">→</span>
+    <span class="node">算法针对性优化</span><span class="arrow">→</span>
+    <span class="node">50 条评测集回归</span><span class="arrow">→</span>
+    <span class="node">发布 + 样本回流</span>
+  </div>
+
+  <h2>六、项目成果</h2>
+  <table>
+    <tr><th>指标</th><th>传统模式基线</th><th>目标 / 实际</th></tr>
+    <tr><td>商品特征保持率</td><td>原生 SD 50–60%</td><td><span class="num">≥90%</span></td></tr>
+    <tr><td>风格一致性</td><td>自由 Prompt 60–70%</td><td><span class="num">≥85%</span></td></tr>
+    <tr><td>直出免修</td><td>0</td><td><span class="num">200+ 张/月</span></td></tr>
+    <tr><td>单张生产周期</td><td>约半天（4 小时）</td><td><span class="num">≤5 分钟</span></td></tr>
+    <tr><td>单人月出图量</td><td>受设计资源限制</td><td><span class="num">900+ 张</span></td></tr>
+    <tr><td>单次生成 GPU 成本</td><td>外包 50–200 元/张</td><td>约 0.03 元</td></tr>
+    <tr><td>月均 GPU 开销</td><td>—</td><td>30–50 元</td></tr>
+  </table>
+
+  <h2>七、复盘</h2>
+
+  <h3>做对了什么</h3>
+  <ul>
+    <li><strong>方向验证先行</strong>：图生图方案先做小范围验证再决定转向，避免直接投入文生图开发后才发现手绘门槛与变形问题；</li>
+    <li><strong>风格固化替代自由 Prompt</strong>：把技术复杂度封在后端，运营只选风格不写 Prompt，是工具能被零设计基础用户真正用起来的核心；</li>
+    <li><strong>评测体系兜底</strong>：客观自动 + 人工抽检 + 业务全量三层评测，让每次算法优化有回归验证，避免"改了一个问题坏了三个"。</li>
+  </ul>
+
+  <h3>可以更好的优化点</h3>
+  <ul>
+    <li><strong>生图质量稳定性</strong>：当前直出免修率约 20%，badcase 中主体变形 + 纹理丢失占 60%。后续针对 top badcase 继续做结构约束、比例锁定与细节保留重绘，同时把运营选图标准继续拆解成可量化维度，反向指导生成优化。</li>
+    <li><strong>风格扩展可持续性</strong>：方案交付后新增风格仍依赖我方团队训练，业务方无法自主扩展。后续将训练全流程 SOP（样本筛选、打标、参数、验收）交付业务方内部处理；轻量需求用参考图迁移，不必走完整训练流程。</li>
+    <li><strong>套图批量生成</strong>：电商物料通常需要同一商品的成套图，目前逐张生成效率低。后续在单张稳定性达标的前提下，设计批量输出套图机制，提升批量生产的稳定性与一致性。</li>
+  </ul>
+
+  <div class="doc-footer">
+    <p>📎 完整 PRD、50 条标准评测集与加权打分体系、LoRA 训练规范、工作流节点定义等配套文档，可在面试时提供。</p>
+    <p>本案例已对品牌名称、客户信息、内部精确运营数据做脱敏处理，保留问题定位、方向决策与产品方法论。</p>
+  </div>
+
+</div>
+<!-- 返回作品集 -->
+<style>
+.pb-back{position:fixed;right:24px;bottom:24px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:#111;color:#fff;text-decoration:none;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.25);opacity:.9}
+.pb-back:hover{opacity:1}
+</style>
+<a class="pb-back" href="/#work">&larr; 返回作品集</a>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Prompt Engineering · 英语口语陪练</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a; color: #e8e8e8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+    line-height: 1.7; padding: 40px 24px;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  .back {
+    position: fixed; top: 20px; left: 20px; z-index: 10;
+    background: rgba(255,255,255,0.08); color: #fff; text-decoration: none;
+    padding: 8px 14px; border-radius: 999px; font-size: 13px;
+    backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12);
+  }
+  .back:hover { background: rgba(255,255,255,0.16); }
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { color: rgba(255,255,255,0.55); font-size: 15px; margin-bottom: 40px; }
+  h2 {
+    font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4); margin: 48px 0 16px;
+    padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); vertical-align: top; }
+  th { color: rgba(255,255,255,0.5); font-weight: 500; font-size: 12px; }
+  td:first-child { color: #fff; font-weight: 500; }
+  .case {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; padding: 18px 22px; margin: 14px 0;
+  }
+  .case .label { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .case .problem { color: #ff8a8a; margin: 10px 0 4px; font-size: 14px; }
+  .case .fix { color: #8affc1; margin: 6px 0; font-size: 14px; }
+  .case p { font-size: 14px; color: rgba(255,255,255,0.75); margin: 6px 0; }
+
+  /* 四层归因排查图 */
+  .attribution { display: flex; gap: 8px; margin: 20px 0; flex-wrap: wrap; }
+  .attr-node {
+    flex: 1; min-width: 140px; border-radius: 8px; padding: 14px 14px;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);
+    position: relative;
+  }
+  .attr-node .layer { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; }
+  .attr-node .verdict { font-size: 14px; font-weight: 600; margin: 6px 0 4px; }
+  .attr-node .reason { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .attr-node.excluded { opacity: 0.75; }
+  .attr-node.excluded .verdict { color: rgba(255,255,255,0.5); }
+  .attr-node.hit {
+    background: rgba(138,255,193,0.08); border-color: rgba(138,255,193,0.4);
+  }
+  .attr-node.hit .verdict { color: #8affc1; }
+  .attr-node.hit .reason { color: rgba(138,255,193,0.85); }
+
+  /* Prompt 版本对比 */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .compare .col { border-radius: 8px; padding: 14px 16px; font-size: 13px; }
+  .compare .before { background: rgba(255,138,138,0.06); border: 1px solid rgba(255,138,138,0.25); }
+  .compare .after { background: rgba(138,255,193,0.06); border: 1px solid rgba(138,255,193,0.3); }
+  .compare .tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .compare .before .tag { color: #ff8a8a; }
+  .compare .after .tag { color: #8affc1; }
+  .compare pre { background: none; padding: 0; font-size: 12.5px; line-height: 1.65; color: rgba(255,255,255,0.85); white-space: pre-wrap; font-family: "SF Mono", Menlo, monospace; }
+
+  /* 数据表 */
+  .metric-table td:first-child { color: rgba(255,255,255,0.85); }
+  .metric-table .num-old { color: #ff8a8a; font-weight: 600; }
+  .metric-table .num-new { color: #8affc1; font-weight: 600; }
+
+  .note { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 12px; padding: 12px 16px; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(255,255,255,0.15); }
+  details { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; margin-top: 16px; }
+  summary { padding: 14px 20px; cursor: pointer; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); }
+  summary:hover { color: #fff; }
+  pre { padding: 20px; overflow-x: auto; font-size: 13px; line-height: 1.6; font-family: "SF Mono", Menlo, monospace; color: #c8c8c8; white-space: pre-wrap; }
+  .version-tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; margin-right: 8px; }
+  .v-old { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+  .v-current { background: rgba(138,255,193,0.15); color: #8affc1; }
+</style>
+</head>
+<body>
+<a href="/#ai-capabilities" class="back">← 返回</a>
+<div class="container">
+
+  <h1>System Prompt Engineering</h1>
+  <p class="subtitle">K12 英语口语陪练 Prompt 设计与迭代</p>
+
+  <!-- 1. 五大模块 -->
+  <h2>Prompt 五大模块结构</h2>
+  <table>
+    <tr><th>模块</th><th>作用</th><th>英语陪练模板落地</th></tr>
+    <tr><td>角色定义</td><td>稳定人设与基调</td><td>陪孩子聊天的大朋友，语气慢、简单、鼓励；服务 K12 学生，不限年级</td></tr>
+    <tr><td>输入绑定</td><td>限制信息来源，防幻觉</td><td>仅用 ASR 转写文本、最近对话上下文、练习主题；不引入外部虚构信息</td></tr>
+    <tr><td>行为约束</td><td>落实产品规则</td><td>开放式对话、引导多说、闲聊一句拉回、冷场降难度、每 5 轮鼓励</td></tr>
+    <tr><td>输出格式</td><td>可解析、可校验</td><td>JSON：reply_text / next_prompt / encouragement / prompt_version</td></tr>
+    <tr><td>禁用规则</td><td>行为边界与合规</td><td>不打分、不纠音（不评判发音对错、不要求重读）；禁止超纲句式；禁止展开闲聊；禁止复读机式重复</td></tr>
+  </table>
+
+  <!-- 3. 核心完整闭环：闲聊跑题 -->
+  <h2>典型闭环 · 闲聊跑题（v1.0 → v1.1）</h2>
+
+  <div class="case">
+    <div class="label">现象</div>
+    <p>孩子本来在跟着阅读作业主题练口语，几轮后突然用中文问"你玩什么游戏""你几岁"，模型顺着聊了三四轮才勉强回到主题，练习节奏被打断。</p>
+  </div>
+
+  <h3 style="font-size:15px; color:#fff; margin:24px 0 10px;">归因排查：为什么归到 Prompt 层</h3>
+  <div class="attribution">
+    <div class="attr-node excluded">
+      <div class="layer">① 数据层</div>
+      <div class="verdict">排除</div>
+      <div class="reason">闲聊不涉及知识库检索，输入绑定本身没问题</div>
+    </div>
+    <div class="attr-node excluded">
+      <div class="layer">② 模型层</div>
+      <div class="verdict">排除</div>
+      <div class="reason">模型能听懂"在练英语"，是能力够但没被约束，不是能力不行</div>
+    </div>
+    <div class="attr-node hit">
+      <div class="layer">③ Prompt 层</div>
+      <div class="verdict">命中</div>
+      <div class="reason">v1.0 只写了"围绕主题展开"，没写闲聊怎么处理，模型自由发挥了</div>
+    </div>
+    <div class="attr-node excluded">
+      <div class="layer">④ 产品边界</div>
+      <div class="verdict">排除</div>
+      <div class="reason">闲聊不违规（孩子社交需求正常），不该用风控拦，该用 Prompt 引导</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px; color:#fff; margin:24px 0 10px;">优化策略：v1.0 vs v1.1 Prompt 对比</h3>
+  <div class="compare">
+    <div class="col before">
+      <div class="tag">v1.0 · 问题版</div>
+      <pre>行为约束：
+1. 围绕主题自然展开对话；
+2. 引导学生多说。
+
+（没有任何关于闲聊的处理规则，
+模型遇到"你玩什么游戏"时，
+按普通对话自由回应）</pre>
+    </div>
+    <div class="col after">
+      <div class="tag">v1.1 · 修复版</div>
+      <pre>行为约束新增：
+6. 学生闲聊（如"你玩什么游戏"）
+   时，最多回应一句，随即引导
+   回练习主题；
+
+禁用规则新增：
+- 学生闲聊时不得展开话题
+  （最多回应一句即拉回）</pre>
+    </div>
+  </div>
+  <p style="font-size:13px; color:rgba(255,255,255,0.55);">策略要点：不是粗暴"禁止闲聊"（孩子反感），而是给模型一个<strong style="color:rgba(255,255,255,0.85);">动作模板</strong>——可以接一句，但必须立刻用一个开放问题把孩子拽回练习主题。</p>
+
+  <h3 style="font-size:15px; color:#fff; margin:24px 0 10px;">验证：评测集回归 + 灰度抽样</h3>
+  <table class="metric-table">
+    <tr><th>验证项</th><th>v1.0 基线</th><th>v1.1 上线后</th></tr>
+    <tr><td>新增闲聊评测样本</td><td colspan="2">5 条（"你玩什么游戏"/"你几岁"/"下课干嘛"/"你喜欢谁"/"你吃饭了吗"）</td></tr>
+    <tr><td>评测集跑题类样本（判定口径：连续 ≥2 轮未回拉主题）</td><td><span class="num-old">5 条中多数触发失败</span></td><td><span class="num-new">5 条全部通过，无连续跑题</span></td></tr>
+    <tr><td>灰度小流量真实对话观察</td><td><span class="num-old">跑题为高频 badcase，周度反馈集中</span></td><td><span class="num-new">该类 badcase 基本消失，偶发单轮闲聊被即时拉回</span></td></tr>
+    <tr><td>回归门禁</td><td colspan="2">全量评测集通过，冷场、鼓励两类其他 badcase 指标无回退</td></tr>
+  </table>
+
+  <!-- 4. 另外两个 case 简表 -->
+  <h2>其他迭代案例（简表）</h2>
+  <table>
+    <tr><th>Badcase</th><th>现象</th><th>归因层</th><th>Prompt 改动</th></tr>
+    <tr>
+      <td>对话冷场</td>
+      <td>孩子连续 3 轮说不出完整句子，模型一直空问开放性问题，孩子退出</td>
+      <td><span class="version-tag v-current">Prompt</span></td>
+      <td>新增"连续 3 轮无有效表达时给选项式支架（You can say: I like...）"，给开口拐杖而不是替孩子说</td>
+    </tr>
+    <tr>
+      <td>缺正向反馈</td>
+      <td>纯对话无鼓励，孩子不知道自己说得好不好，续聊轮次短</td>
+      <td><span class="version-tag v-current">Prompt</span></td>
+      <td>输出 JSON 新增 encouragement 字段 + 每 5 轮小结鼓励（TTS 稳定播报）</td>
+    </tr>
+  </table>
+
+  <!-- 5. 全文折叠 -->
+  <h2>System Prompt 全文 · v1.1.0</h2>
+  <details>
+    <summary>展开查看完整 Prompt</summary>
+<pre># 英语口语陪练 System Prompt — v1.1.0
+
+## 一、角色定义
+你是"晓狐伴学机"的英语口语陪练伙伴，服务对象为 K12 学生（不限年级，
+依托大模型语言能力，不绑定教材）。
+你的任务：陪孩子开口说英语，让孩子敢说、愿意说，而不是给孩子打分。
+孩子说错了不纠正发音、不打断，听完再自然接话。
+你说话要慢、要简单、要鼓励，像一个陪孩子聊天的大朋友。
+
+## 二、输入绑定
+本次对话只能使用以下输入：
+- 学生语音文本：{asr_text}
+- 对话上下文：{dialogue_history}（最近 30 分钟窗口）
+- 练习主题：{topic}
+约束：
+- 回复围绕练习主题自然展开，不限定教材范围；
+- 不引入输入之外的虚构信息。
+
+## 三、行为约束
+1. 开放式对话，围绕主题自然展开，不限定教材范围；
+2. 不进行发音纠音（不评价发音对错，不要求重读纠正）；
+3. 学生表达卡壳时，用简单英语给出可选表达提示；
+4. 学生用中文求助时，示范对应的简单英文表达；
+5. 每轮对话尽量引导学生多说（追问开放性问题）；
+6. 学生闲聊（如"你玩什么游戏"）时，最多回应一句，随即引导回练习主题；
+7. 学生连续 3 轮无有效表达时，降低难度给选项式引导
+   （如 "You can say: I like... / I don't like..."）；
+8. 每 5 轮对话做一次小结与鼓励
+   （如 "You did great! You said 3 sentences!"）；
+9. 语气轻松、鼓励，允许孩子犯语法错误。
+
+## 四、输出格式
+严格按以下 JSON 输出：
+{
+  "reply_text": "回复内容（对话用语）",
+  "topic": "当前主题",
+  "next_prompt": "引导继续的开放性问题",
+  "encouragement": "本轮/阶段性鼓励语（可空）",
+  "prompt_version": "english-tutor-v1.1.0"
+}
+
+## 五、禁用规则
+- 禁止纠音（评价"发音不标准 / 再读一遍"）；
+- 禁止使用超出 K12 英语水平的复杂句式；
+- 禁止输出与学习无关的敏感内容；
+- 学生闲聊时不得展开话题（最多回应一句即拉回）；
+- 禁止连续两轮使用相同引导句式（避免复读机感）；
+- 禁止大段中英翻译式讲解（以英文对话为主，必要时给简短中文提示）。</pre>
+  </details>
+
+</div>
+</body>
+</html>

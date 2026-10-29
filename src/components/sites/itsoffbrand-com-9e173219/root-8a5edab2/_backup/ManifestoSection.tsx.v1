@@ -1,0 +1,69 @@
+"use client";
+
+import { useReveal } from "@/lib/useReveal";
+import Link from "next/link";
+
+/**
+ * Manifesto (huge statement line) + About intro (two columns).
+ * Source: one <section> with two stacked grids.
+ */
+export default function ManifestoSection() {
+  const ref = useReveal<HTMLElement>();
+
+  return (
+    <section id="about" className="s" ref={ref}>
+      <div className="c">
+        <div className="spacer-10" />
+        <div className="grid-main">
+          <div className="mbm-diff mf-title-w">
+            <h2 stagger-scroll="" className="h-b">
+              <span split-text="" className="mf-line">
+                With EMOTION + INNOVATION, We push THE BOUNDARIES OF DIGITAL
+                CREATIVITY.
+              </span>
+            </h2>
+          </div>
+        </div>
+        <div className="spacer-10" />
+        <div className="grid-main m-flex">
+          <div className="mbm-diff mf-left-w">
+            <p split-text="" stagger-scroll="1" className="text-small caps">
+              We are a founder-led Scottish born, global digital marketing,
+              branding &amp; web design agency.
+            </p>
+            <div className="o-hidden link-wrap">
+              <div className="o-hidden">
+                <Link
+                  href="/about-us"
+                  stagger-el=""
+                  className="page-link-w w-inline-block"
+                >
+                  <div className="o-hidden page-link-inner">
+                    <div split-text="" className="text-small btn-txt">About Us</div>
+                    <div className="btn-icon-r">
+                      <div className="btn-icon-w">
+                        <div className="text-small btn-txt">-&gt;</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="link-track">
+                    <div className="link-track-fill" />
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="mbm-diff mf-right-w">
+            <p stagger-lines="2" split-text="" className="text-small">
+              Every brand has a story, from startups finding their voice to
+              titans refining their legacy. We ensure that tale shines
+              brilliantly. With a blend of rapid iteration and collaborative
+              spirit, we empower you to reshape your digital narrative.
+            </p>
+          </div>
+        </div>
+        <div className="spacer-10" />
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Privacy Policy - AI Tom Bud - Talking Tom & Friends Official</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #2B6AFF;
+      --primary-light: #5B8FFF;
+      --primary-dark: #1A55E0;
+      --primary-wash: #E8EFFF;
+      --accent: #FF2D55;
+      --accent-light: #FF6B8A;
+      --accent-wash: #FFF0F3;
+      --text-dark: #1A1A2E;
+      --text-body: #444455;
+      --text-muted: #888899;
+      --bg-white: #FFFFFF;
+      --bg-soft: #F5F7FF;
+      --bg-cool: #EEF2FF;
+
+      --white: #FFFFFF;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-pill: 50px;
+
+      --font-display: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-body: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      
+      --nav-height: 72px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-white);
+      color: var(--text-body);
+      line-height: 1.8;
+      font-weight: 500;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Navigation (Copied exactly from index.html) ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      border-bottom: 1px solid rgba(43,106,255,0.06);
+      transition: background 0.3s var(--ease);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-height);
+      padding: 0 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 16px;
+      position: relative;
+      flex-wrap: nowrap;
+    }
+    .nav-logo {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      height: 100%;
+      width: auto;
+      display: block;
+      border-radius: 0;
+    }
+    
+    /* Mobile Menu Toggle Button */
+    .mobile-menu-btn {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      z-index: 101;
+      flex-shrink: 0;
+    }
+    .mobile-menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--text-dark);
+      border-radius: 1px;
+      transition: all 0.3s var(--ease);
+    }
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .mobile-menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Mobile Buy Button */
+    .buy-link-mobile {
+      background: #FF2D55;
+      color: var(--white);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(255,45,85,0.25);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+    .buy-link-mobile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255,45,85,0.35);
+      background: #ff1f4b;
+      text-decoration: none;
+    }
+    
+    /* Desktop Buy Button */
+    .nav-desktop-buy {
+      flex-shrink: 0;
+    }
+    .nav-desktop-buy .buy-link {
+      background: #FF2D55;
+      color: var(--white);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(255,45,85,0.25);
+      white-space: nowrap;
+    }
+    .nav-desktop-buy .buy-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255,45,85,0.35);
+      background: #ff1f4b;
+      text-decoration: none;
+    }
+    .nav-desktop-buy .buy-link:active {
+      transform: translateY(1px);
+    }
+
+    /* Desktop Navigation Links */
+    .nav-links {
+      display: flex;
+      gap: clamp(12px, 2.5vw, 32px);
+      list-style: none;
+      align-items: center;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+    .nav-links a {
+      font-size: clamp(12px, 1.2vw, 14px);
+      font-weight: 600;
+      color: var(--text-body);
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--primary); text-decoration: none; }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .nav-links {
+        gap: clamp(10px, 1.5vw, 18px);
+      }
+      .nav-links a {
+        font-size: 13px;
+      }
+      .nav-desktop-buy .buy-link {
+        padding: 6px 14px;
+        font-size: 13px;
+      }
+    }
+
+    /* 桌面端专用样式 (min-width: 768px) */
+    @media (min-width: 768px) {
+      .mobile-menu-btn,
+      .buy-link-mobile {
+        display: none;
+      }
+      .nav-desktop-buy {
+        display: flex;
+      }
+      .nav-inner {
+        justify-content: flex-start;
+      }
+      .nav-logo {
+        margin-right: auto;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+      }
+      .nav-links {
+        margin-left: 0;
+      }
+      .nav-desktop-buy {
+        margin-left: 24px;
+      }
+    }
+
+    /* Mobile media query navigation styles */
+    @media (max-width: 767px) {
+      :root {
+        --nav-height: 64px;
+      }
+      body {
+        overflow-x: hidden;
+      }
+      .nav-inner {
+        height: var(--nav-height);
+        padding: 0 14px;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+      .nav-logo {
+        height: 40px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 44vw;
+        margin: 0;
+        z-index: 101;
+      }
+      .nav-logo img {
+        max-width: 100%;
+        object-fit: contain;
+      }
+      .mobile-menu-btn {
+        display: flex;
+        width: 32px;
+        height: 32px;
+        padding: 4px;
+        gap: 4px;
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .mobile-menu-btn span {
+        width: 22px;
+        margin: 0 auto;
+      }
+      .mobile-menu-btn.active span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+      }
+      .mobile-menu-btn.active span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+      .nav-desktop-buy {
+        display: none;
+      }
+      .buy-link-mobile {
+        padding: 7px 14px;
+        font-size: 13px;
+        margin-left: 0;
+        position: relative;
+        z-index: 101;
+      }
+      .nav-links {
+        position: absolute;
+        top: calc(var(--nav-height) + 8px);
+        left: 12px;
+        right: 12px;
+        background: var(--bg-white);
+        backdrop-filter: blur(0);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 0;
+        border-radius: 16px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        border: 1px solid rgba(43,106,255,0.08);
+        z-index: 102;
+        transform: translateY(-20px);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.25s var(--ease), opacity 0.25s var(--ease), visibility 0.25s;
+        background: rgba(255,255,255,0.98);
+      }
+      .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+      }
+      .nav-links a {
+        display: block;
+        padding: 12px 16px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-body);
+        border-bottom: 1px solid rgba(43,106,255,0.06);
+      }
+      .nav-links li:last-child a {
+        border-bottom: none;
+      }
+      .nav-links a:hover {
+        background: var(--bg-soft);
+        text-decoration: none;
+      }
+    }
+
+    /* ===== Minimalist Editorial Text Layout (miko.ai reference) ===== */
+    .policy-container {
+      max-width: 800px;
+      margin: 140px auto 80px;
+      padding: 0 24px;
+    }
+
+    .policy-header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .policy-title {
+      font-size: clamp(28px, 4.5vw, 40px);
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.2;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .meta-info {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+      justify-content: center;
+    }
+
+    .meta-item-label {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .policy-intro {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .policy-body {
+      font-size: 15px;
+      color: #374151; /* Elegant gray-700 body text */
+      text-align: left;
+    }
+
+    .policy-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-top: 48px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #E5E7EB;
+      padding-bottom: 8px;
+      text-align: left;
+    }
+
+    .policy-body h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-top: 28px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .policy-body p {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .policy-body strong {
+      color: var(--text-dark);
+    }
+
+    /* Strict minimal list styling */
+    .policy-body ul {
+      list-style-type: disc;
+      margin-left: 24px;
+      margin-bottom: 24px;
+    }
+
+    .policy-body li {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    /* Nested bullet points */
+    .policy-body ul ul {
+      list-style-type: circle;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 20px;
+    }
+
+    /* Footer / Bottom of Policy */
+    .policy-footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid #E5E7EB;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: left;
+    }
+
+    @media (max-width: 767px) {
+      .policy-container {
+        margin-top: 100px;
+        margin-bottom: 40px;
+        padding: 0 16px;
+      }
+      .policy-title {
+        font-size: 24px;
+      }
+      .policy-body h2 {
+        font-size: 18px;
+        margin-top: 32px;
+      }
+      .policy-body h3 {
+        font-size: 15px;
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation (Exactly duplicated structure from index.html) -->
+  <header class="nav" data-component="Navigation" data-od-id="nav">
+    <div class="nav-inner">
+      <div class="nav-logo"><img src="images/logo.png" alt="Talking Tom & Friends" /></div>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav data-component="PrimaryNav">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html#company">About Us</a></li>
+          <li><a href="index.html#characters">Characters</a></li>
+          <li><a href="index.html#product">Product</a></li>
+          <li><a href="index.html#specs">Specifications</a></li>
+          <li><a href="index.html#guestbook">Stay Updated</a></li>
+        </ul>
+      </nav>
+      
+      <div class="nav-desktop-buy">
+        <a href="https://www.amazon.com/dp/B0EXAMPLE" class="buy-link" target="_blank" rel="noopener noreferrer">Buy Now</a>
+      </div>
+
+      <a href="https://www.amazon.com/dp/B0EXAMPLE" class="buy-link-mobile" target="_blank" rel="noopener noreferrer">Buy Now</a>
+    </div>
+  </header>
+
+  <!-- Main Editorial Content Area -->
+  <div class="policy-container">
+    <div class="policy-header">
+      <h1 class="policy-title">AI Tom Bud Privacy Policy</h1>
+      
+      <div class="meta-info">
+        <div><span class="meta-item-label">Version:</span> v1.4</div>
+        <div><span class="meta-item-label">Last Updated:</span> May. 29, 2026</div>
+        <div><span class="meta-item-label">Effective Date:</span> May. 29, 2026</div>
+      </div>
+
+      <p class="policy-intro">
+        Welcome to the "AI Tom Bud" software and hardware products and related services!
+      </p>
+    </div>
+
+    <main class="policy-body">
+      <!-- About Us -->
+      <section>
+        <h2>About Us</h2>
+        <p>
+          This Privacy Policy ("Policy") outlines how Hangzhou Qianyi Lingjing Intelligent Technology Co., Ltd. and/or its affiliates (collectively, "we," "us," or "our") collect and process your information. We value your privacy and have carefully considered your needs in formulating this Policy.
+        </p>
+      </section>
+
+      <!-- Scope of Policy -->
+      <section>
+        <h2>Scope of This Privacy Policy</h2>
+        <p>
+          This Privacy Policy applies to you only if you are an <strong>AI Tom Bud user</strong>, meaning that you registered on our Platform with an <strong>e-mail address</strong>.
+        </p>
+        <p>
+          This Privacy Policy will <strong>not</strong> apply to you if you are an <strong>AITongBan(AI 童伴) user</strong>, which means you registered on the Platform with a mobile number.
+        </p>
+        <p>
+          If you are an <strong>AITongBan(AI 童伴) user</strong>, the processing of your personal information shall be subject to the <strong>AITongBan(AI 童伴) Privacy Policy</strong> (https://link.wtturl.cn/?target=https%3A%2F%2Fmiko.ai%2Fpolicies%2Fprivacy-policy&scene=im&aid=582478&lang=zh) instead of this Privacy Policy.
+        </p>
+        <p>
+          This Policy applies to the products and services we provide through websites, applications, mini-programs, smart hardware, third-party platforms via Software Development Kits (SDKs), Application Programming Interfaces (APIs), and future innovative formats enabled by technological advancements (collectively, "Services" or "AI Tom Bud") (including, but not limited to, platforms centered on "AI interactive dialogue" and other functionalities).
+        </p>
+        <p>
+          This Policy specifies how we collect, use, store, share, and protect the personal information ("Personal Information") you authorize us to collect or that we proactively gather when you use our mobile application-based products or services.
+        </p>
+        <p>
+          Please read this Policy carefully before using our Services. By reviewing this Policy, you will understand how we handle your Personal Information to better utilize our Services and make informed choices. Key content, including sensitive information we may collect, is highlighted in bold for your attention.
+        </p>
+        <p>
+          By agreeing to this Policy, you acknowledge and consent to our processing of your Personal Information in relevant scenarios to enable service functionalities. However, this does not mean we process all Personal Information described herein upon your initial use of our products/services. We only process necessary Personal Information for specific functionalities, adhering to the principle of minimal necessity.
+        </p>
+      </section>
+
+      <!-- Definitions -->
+      <section>
+        <h2>Definitions</h2>
+        <p>In this Policy:</p>
+        <ul>
+          <li><strong>Personal Information:</strong> Information recorded electronically or otherwise that can identify a specific individual or reflect their activities, either independently or in combination with other data.</li>
+          <li><strong>Smart Hardware Devices:</strong> Non-standard computing devices produced by manufacturers with human-machine interfaces and wireless networking capabilities.</li>
+          <li><strong>Application:</strong> Mobile applications (including mobile clients, mini-programs, and WeChat mini-programs) developed by us to help users remotely control smart devices and connect to our cloud platform.</li>
+        </ul>
+      </section>
+
+      <!-- 1. Collection and Use of Personal Information -->
+      <section>
+        <h2>1. Collection and Use of Personal Information</h2>
+        <p>
+          We adhere to principles of legality, fairness, necessity, and integrity when collecting and using your Personal Information for the purposes below.
+        </p>
+        
+        <h3>1.1. Overview of Personal Information Collection and Use</h3>
+        <p>
+          The core functionality of AI Tom Bud is human-machine interactive dialogue. To provide additional services such as device binding, device management, usage statistics, and dialogue summaries, we require basic Personal Information necessary for these functionalities, unless otherwise mandated by laws or regulations. If you refuse to provide such information, we may be unable to deliver the corresponding services. Note: If you provide another individual’s Personal Information, ensure you have obtained their consent; otherwise, you assume liability for any consequences.
+        </p>
+
+        <h3>1.1.1. Registration/Login</h3>
+        <p>
+          To comply with legal requirements and provide registration/login services, you must provide a mobile number or email address. We will send a verification code to confirm your identity.
+        </p>
+        <p>
+          If you decline to provide this information, we may be unable to offer AI interactive dialogue and other functionalities. Apple ID and Google Account login options are also available. When using these methods, you must bind a mobile number or email for identity verification.
+        </p>
+
+        <h3>1.1.2. Device Binding</h3>
+        <p>
+          To bind the application to a hardware device, we may request permissions for location, Bluetooth, camera, and WLAN access. During the device network configuration and binding process, we collect your current Wi-Fi network information (including SSID, i.e., network name, and BSSID, i.e., network identifier) to help the smart hardware device connect to the same Wi-Fi network as your phone in order to complete device network configuration and binding. We also collect:
+        </p>
+        <ul>
+          <li>Wi-Fi status, location data (to retrieve Wi-Fi networks), Wi-Fi network details, device connection status, hardware/device models, operating system, and IP address.</li>
+        </ul>
+        <p>
+          This information is uploaded to our servers to prevent unauthorized access and enhance security. You may unbind devices via the "Unbind" feature.
+        </p>
+
+        <h3>1.1.3. Device Management</h3>
+        <p>
+          After binding a device, you can manage functionalities (e.g., renaming devices, authorizing music features) through the application. Your settings and data are uploaded to our servers for device control.
+        </p>
+
+        <h3>1.1.4. Interactive Dialogue</h3>
+        <p>
+          We use generative AI models to provide chat and interaction services. When using the chat function, we automatically receive and record audio inputs (e.g., voice conversations, recordings) to deliver intelligent responses.
+        </p>
+        <p>
+          For weather inquiries, we use approximate location data to provide localized weather updates.
+        </p>
+        <p>
+          <strong>Under applicable laws, we may de-identify/anonymize contextual interaction data to avoid identifying individuals, ensuring privacy while improving service quality and user experience.</strong>
+        </p>
+        <p>
+          If your inputs include others’ Personal Information, ensure you have obtained their consent to prevent unauthorized disclosure.
+        </p>
+
+        <h3>1.1.5. Usage Statistics and Summaries</h3>
+        <p>
+          To ensure service security and quality, we record your interaction times, chat logs (including inputs, system responses, and derived dialogue themes) and display them as bar charts or summaries in the app.
+        </p>
+
+        <h3>1.1.6. Operations and Security</h3>
+        <p>
+          To maintain secure and efficient operations, we collect:
+        </p>
+        <p>
+          <strong>Log data (user ID, request timestamps), usage details (client/server timestamps, device type, network info), device info (model), and network data (connection type, status, quality, Wi-Fi network name SSID, Wi-Fi network identifier BSSID).</strong>
+        </p>
+        <p>
+          This data assists in troubleshooting service anomalies.
+        </p>
+
+        <h3>1.1.7. Sensor Information</h3>
+        <p>
+          When you use the camera scanning feature, we access the device's accelerometer sensor data to detect device orientation changes, ensuring the correct orientation of the camera preview and captured content. This sensor data is processed locally on your device only while you are using the camera feature, and is not uploaded to our servers or used for any other purpose.
+        </p>
+
+        <h3>1.2. Rules for Information Use</h3>
+        <p>
+          We use collected information only for the purposes stated in this Policy. If we use your Personal Information beyond the original scope, we will notify and obtain your explicit consent. We apply de-identification measures where appropriate.
+        </p>
+        <p>
+          Under applicable laws, we may collect/use Personal Information without consent in the following cases:
+        </p>
+        <ul>
+          <li>1. To fulfill contractual or legal obligations;</li>
+          <li>2. To perform statutory duties;</li>
+          <li>3. To respond to public health emergencies or protect life/property in emergencies;</li>
+          <li>4. For public interest activities (e.g., news reporting, public oversight);</li>
+          <li>5. Processing publicly available Personal Information within legal bounds;</li>
+          <li>6. Other scenarios permitted by law.</li>
+        </ul>
+        <p>
+          If third parties provide your Personal Information, we ensure they comply with legal requirements and obtain your consent.
+        </p>
+      </section>
+
+      <!-- 2. Use of Cookies and Similar Technologies -->
+      <section>
+        <h2>2. Use of Cookies and Similar Technologies</h2>
+        <p>
+          Cookies and similar technologies are industry standards. To enable service functionality, we store Cookies or LocalStorage on your device, containing identifiers, service names, and usage statistics.
+        </p>
+        <p>
+          We do not use Cookies for purposes beyond this Policy. You may block or delete Cookies via device settings, but this may affect service availability.
+        </p>
+      </section>
+
+      <!-- 3. Data Storage and Security -->
+      <section>
+        <h2>3. Data Storage and Security</h2>
+        
+        <h3>3.1. Storage Duration</h3>
+        <p>
+          We retain Personal Information only as long as necessary, except when required by:
+        </p>
+        <ul>
+          <li>1. Applicable laws;</li>
+          <li>2. Court orders or legal proceedings;</li>
+          <li>3. Government enforcement.</li>
+        </ul>
+        <p>
+          If services are discontinued, we will notify you and delete/anonymize your data within a reasonable period.
+        </p>
+
+        <h3>3.2. Storage Location</h3>
+        <p>
+          All Personal Information collected in China is stored domestically. We will not transfer your data overseas without your explicit consent, except to fulfill legal obligations.
+        </p>
+
+        <h3>3.3. Security Measures</h3>
+        <p>
+          We implement industry-standard safeguards to prevent loss, misuse, unauthorized access, or disclosure:
+        </p>
+        <ul>
+          <li>1. Encrypting and anonymizing data;</li>
+          <li>2. Restricting internal access to authorized personnel;</li>
+          <li>3. Conducting regular security training.</li>
+        </ul>
+
+        <h3>3.4. Incident Response</h3>
+        <p>
+          In case of a data breach, we will notify you promptly via push notifications, email, or public announcements. We will also report incidents to regulators as required by law.
+        </p>
+      </section>
+
+      <!-- 4. Third-Party Data Sharing and Disclosure -->
+      <section>
+        <h2>4. Third-Party Data Sharing and Disclosure</h2>
+        
+        <h3>4.1. Third-Party Sharing</h3>
+        <p>
+          We do not sell Personal Information.
+        </p>
+        <p>
+          <strong>However, we may share necessary data with service providers to deliver our Services. You may delete publicly shared data via app settings, but third parties may retain it under their own policies.</strong>
+        </p>
+        
+        <p style="font-weight: 600; color: var(--text-dark); margin-top: 24px; margin-bottom: 12px;">
+          Third-Party Service Providers:
+        </p>
+        
+        <p><strong>Qwen AI Model</strong><br />
+        Provider: Alibaba Cloud Computing Co. Ltd<br />
+        Purpose: Intent recognition during interactions<br />
+        Data Collected: Dialogue data<br />
+        Link: https://www.aliyun.com/product/tongyi</p>
+
+        <p><strong>Google Login SDK</strong><br />
+        Provider: Google Inc.<br />
+        Purpose: Google Account registration/login<br />
+        Data Collected: Google OpenID<br />
+        Link: https://developers.google.cn/identity</p>
+
+        <p><strong>Apple Login</strong><br />
+        Provider: Apple Inc.<br />
+        Purpose: Apple ID registration/login<br />
+        Data Collected: Apple OpenID<br />
+        Link: https://developer.apple.com/sign-in-with-apple/</p>
+
+        <h3>4.2. Public Disclosure</h3>
+        <p>
+          Your account nickname defaults to your mobile number or email upon first login. We will seek your explicit consent for any additional public disclosures, informing you of the purpose, data types, and risks.
+        </p>
+
+        <h3>4.3. Data Transfers</h3>
+        <p>
+          In mergers, acquisitions, or asset transfers, we will notify you and ensure your data remains protected under standards no less stringent than this Policy.
+        </p>
+
+        <h3>4.4. Exceptions to Consent</h3>
+        <p>
+          We may share/disclose data without consent in cases involving:
+        </p>
+        <ul>
+          <li>1. National/defense security;</li>
+          <li>2. Legal compliance;</li>
+          <li>3. Public health/safety;</li>
+          <li>4. Criminal investigations;</li>
+          <li>5. Protection of life/property;</li>
+          <li>6. Publicly available information;</li>
+          <li>7. News reporting;</li>
+          <li>8. Contract fulfillment;</li>
+          <li>9. Service maintenance;</li>
+          <li>10. Other lawful scenarios.</li>
+        </ul>
+      </section>
+
+      <!-- 5. Your Rights -->
+      <section>
+        <h2>5. Your Rights</h2>
+        <p>
+          You have the right to access, correct, delete, or withdraw consent for your Personal Information. Note: Revoking consent may disable related functionalities.
+        </p>
+
+        <h3>5.1. Accessing Personal Information</h3>
+        <p>
+          View your account name in the app’s "Profile" section.
+        </p>
+
+        <h3>5.2. Correcting/Deleting Data</h3>
+        <p>
+          Contact us via the methods in Section 8 to request corrections/deletions. We will respond within 15 business days.
+        </p>
+
+        <h3>5.3. Withdrawing Consent</h3>
+        <p>
+          Adjust permissions via your device’s Settings > Apps > AI Tom Bud > Permissions. Withdrawing consent may affect service availability.
+        </p>
+
+        <h3>5.4. Account Deletion</h3>
+        <p>
+          Delete your account via Settings > Delete Account. Upon deletion, we will remove or anonymize your data within 10 business days, except where legally required.
+        </p>
+      </section>
+
+      <!-- 6. Protection of Minors' Information -->
+      <section>
+        <h2>6. Protection of Minors’ Information</h2>
+        <p>
+          Review Section 9 of the User Service Agreement for details on minor protection. We strictly protect minors’ Personal Information under applicable laws, adhering to principles of necessity, consent, security, and lawful use.
+        </p>
+      </section>
+
+      <!-- 7. Policy Updates -->
+      <section>
+        <h2>7. Policy Updates</h2>
+        <p>
+          We may update this Policy to reflect operational, technical, or legal changes. The "Last Updated" date will be revised accordingly. Continued use of our Services constitutes acceptance of the updated Policy. For significant changes, we will seek your consent as required by law.
+        </p>
+      </section>
+
+      <!-- 8. Contact Us -->
+      <section>
+        <h2>8. Contact Us</h2>
+        <p>
+          For questions, complaints, or suggestions regarding this Policy or data protection, contact us via in-app support or:
+        </p>
+        <p style="font-weight: 600; margin-bottom: 8px;">
+          Email: help@jktom.com
+        </p>
+        <p style="margin-top: 24px; font-weight: 600; color: var(--text-dark);">
+          Thank you for reviewing our Privacy Policy!
+        </p>
+      </section>
+    </main>
+
+    <footer class="policy-footer">
+      (End of Document)
+    </footer>
+  </div>
+
+  <script>
+    // Toggle active state of hamburger menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    function closeMenu() {
+      if (!navLinks.classList.contains('active')) return;
+      mobileMenuBtn.classList.remove('active');
+      navLinks.classList.remove('active');
+    }
+
+    function openMenu() {
+      if (navLinks.classList.contains('active')) return;
+      mobileMenuBtn.classList.add('active');
+      navLinks.classList.add('active');
+    }
+
+    if (mobileMenuBtn && navLinks) {
+      mobileMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (navLinks.classList.contains('active')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+      
+      // Close menu when a link is clicked
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => closeMenu());
+      });
+      
+      // Close menu when clicking outside (mobile only)
+      document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 767) {
+          if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+            closeMenu();
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

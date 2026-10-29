@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card Globe</title>
+<style>
+  :root { --stage-bg: transparent; }
+  * { box-sizing: border-box; }
+  html, body { width:100%; height:100%; margin:0; overflow:hidden; background:var(--stage-bg); color-scheme:dark; }
+  .card-globe { position:relative; width:100%; height:100%; min-height:420px; overflow:hidden; background:var(--stage-bg); }
+  #globe-canvas { display:block; width:100%; height:100%; background:var(--stage-bg); }
+  .runner-video {
+    position:absolute;
+    top:calc(50% - 47vmin);
+    left:50%;
+    z-index:10;
+    width:auto;
+    height:clamp(264px, 44vmin, 380px);
+    aspect-ratio:1;
+    pointer-events:none;
+    user-select:none;
+    background:transparent;
+    object-fit:contain;
+    transform:translateX(-50%);
+  }
+  @media (max-width:720px){ .card-globe{min-height:320px;} }
+</style>
+</head>
+<body>
+<main class="card-globe" aria-label="Card Globe image showcase">
+  <canvas id="globe-canvas" aria-hidden="true"></canvas>
+  <video id="runner-video" class="runner-video" src="./video/runner.webm" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+</main>
+<script>
+const IMAGE_SOURCES = Array.from({length:31},(_,i)=>`./photos/photo-${String(i+1).padStart(2,'0')}.jpg`);
+const RING_COUNTS=[8,12,14,12,8];
+const LATITUDES=[64.25,33.85,0,-33.85,-64.25];
+const CONFIG={globeSize:.93,gap:.025,backFade:.55,duration:20000,camera:3.6,segmentsX:8,segmentsY:6,cornerRadius:.035};
+const canvas=document.getElementById('globe-canvas');
+const ctx=canvas.getContext('2d');
+let W=0,H=0,DPR=1,R=1,CX=0,CY=0;
+let cards=[],gridSpecs=[],assignments=[],textureById=new Map();
+let startTime=performance.now();
+
+function loadImage(src){return new Promise(resolve=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>resolve(null);im.src=src;});}
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function roundedTexture(image){
+  const tw=360,th=480,c=document.createElement('canvas');c.width=tw;c.height=th;
+  const x=c.getContext('2d'); if(!x)return null;
+  const iw=image.naturalWidth||image.width, ih=image.naturalHeight||image.height;
+  const target=tw/th, srcAspect=iw/ih; let sx=0,sy=0,sw=iw,sh=ih;
+  if(srcAspect>target){sw=ih*target;sx=(iw-sw)/2;}else{sh=iw/target;sy=(ih-sh)/2;}
+  x.save();x.beginPath();
+  const rad=Math.round(tw*CONFIG.cornerRadius);
+  x.roundRect?x.roundRect(0,0,tw,th,rad):(x.moveTo(rad,0),x.arcTo(tw,0,tw,th,rad),x.arcTo(tw,th,0,th,rad),x.arcTo(0,th,0,0,rad),x.arcTo(0,0,tw,0,rad),x.closePath());
+  x.clip();x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.drawImage(image,sx,sy,sw,sh,0,0,tw,th);x.restore();
+  return c;
+}
+function makeGrid(){
+  const specs=[],rows=[];
+  RING_COUNTS.forEach((count,row)=>{
+    rows[row]=[];
+    for(let col=0;col<count;col++){
+      const idx=specs.length;
+      specs.push({row,col,lon:col*Math.PI*2/count,neighbors:new Set()});
+      rows[row].push(idx);
+    }
+  });
+  for(const row of rows){
+    for(let i=0;i<row.length;i++){
+      const prev=row[(i-1+row.length)%row.length],next=row[(i+1)%row.length],idx=row[i];
+      specs[idx].neighbors.add(prev);specs[idx].neighbors.add(next);
+    }
+  }
+  for(let r=0;r<rows.length-1;r++){
+    for(const a of rows[r]){
+      let nearest=null,best=Infinity;
+      for(const b of rows[r+1]){
+        let diff=Math.abs(specs[a].lon-specs[b].lon);diff=Math.min(diff,Math.PI*2-diff);
+        if(diff<best){best=diff;nearest=b;}
+      }
+      if(nearest!==null){specs[a].neighbors.add(nearest);specs[nearest].neighbors.add(a);}
+    }
+  }
+  return specs;
+}
+function assignImages(ids,specs){
+  if(!ids.length)return [];
+  for(let attempt=0;attempt<300;attempt++){
+    const order=shuffle(specs.map((_,i)=>i));
+    const result=new Array(specs.length);
+    const usage=new Map(ids.map(id=>[id,0]));
+    let ok=true;
+    for(const index of order){
+      const forbidden=new Set();
+      for(const neighbor of specs[index].neighbors){
+        if(result[neighbor]!==undefined)forbidden.add(result[neighbor]);
+      }
+      const candidates=ids.filter(id=>!forbidden.has(id));
+      if(!candidates.length){ok=false;break;}
+      const minimum=Math.min(...candidates.map(id=>usage.get(id)||0));
+      const preferred=candidates.filter(id=>(usage.get(id)||0)===minimum);
+      const chosen=preferred[Math.floor(Math.random()*preferred.length)];
+      result[index]=chosen;usage.set(chosen,(usage.get(chosen)||0)+1);
+    }
+    if(ok&&ids.every(id=>usage.get(id)>0))return result;
+  }
+  const fallback=shuffle(ids);return specs.map((_,i)=>fallback[i%fallback.length]);
+}
+function spherePoint(lat,lon){const cl=Math.cos(lat);return[R*cl*Math.sin(lon),-R*Math.sin(lat),R*cl*Math.cos(lon)];}
+function rotateX(p,angle){const c=Math.cos(angle),s=Math.sin(angle);return[p[0],p[1]*c-p[2]*s,p[1]*s+p[2]*c];}
+function project(p){const scale=CONFIG.camera*R/(CONFIG.camera*R-p[2]);return[CX+p[0]*scale,CY-p[1]*scale,p[2],scale];}
+function buildCards(){
+  cards=[];
+  gridSpecs.forEach((spec,index)=>{
+    const lat=LATITUDES[spec.row]*Math.PI/180,lon=spec.lon;
+    const count=RING_COUNTS[spec.row];
+    const slot=Math.PI*2*R*Math.cos(lat)/count;
+    const width=slot*(1-CONFIG.gap),height=width*4/3;
+    const center=spherePoint(lat,lon);
+    const cosLon=Math.cos(lon),sinLon=Math.sin(lon),cosLat=Math.cos(lat),sinLat=Math.sin(lat);
+    cards.push({center,width,height,texture:textureById.get(assignments[index]),right:[cosLon,0,-sinLon],down:[sinLon*sinLat,cosLat,cosLon*sinLat],normal:[sinLon*cosLat,-sinLat,cosLon*cosLat]});
+  });
+}
+function resize(){
+  DPR=Math.min(devicePixelRatio||1,2);
+  W=Math.round(canvas.clientWidth*DPR);H=Math.round(canvas.clientHeight*DPR);
+  if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;}
+  R=Math.min(W,H)*CONFIG.globeSize*.5;CX=W/2;CY=H/2;
+  buildCards();
+}
+function meshPoint(card,lx,ly,spin){
+  const sag=-(lx*lx+ly*ly)/(2*R);
+  const p=[card.center[0]+card.right[0]*lx+card.down[0]*ly+card.normal[0]*sag,card.center[1]+card.right[1]*lx+card.down[1]*ly+card.normal[1]*sag,card.center[2]+card.right[2]*lx+card.down[2]*ly+card.normal[2]*sag];
+  return project(rotateX(p,spin));
+}
+function drawCard(card,spin,sortedDepth){
+  if(!card.texture)return;
+  const nx=CONFIG.segmentsX,ny=CONFIG.segmentsY;
+  const sw=card.texture.width/nx,sh=card.texture.height/ny;
+  const depth=sortedDepth/R,front=Math.max(0,Math.min(1,(depth+1)/2));
+  ctx.globalAlpha=1-(1-front)*CONFIG.backFade;
+  for(let iy=0;iy<ny;iy++){
+    const ly0=-card.height/2+iy*card.height/ny,ly1=-card.height/2+(iy+1)*card.height/ny;
+    for(let ix=0;ix<nx;ix++){
+      const lx0=-card.width/2+ix*card.width/nx,lx1=-card.width/2+(ix+1)*card.width/nx;
+      const p00=meshPoint(card,lx0,ly0,spin),p10=meshPoint(card,lx1,ly0,spin),p01=meshPoint(card,lx0,ly1,spin);
+      const ux=p10[0]-p00[0],uy=p10[1]-p00[1],vx=p01[0]-p00[0],vy=p01[1]-p00[1];
+      ctx.save();ctx.transform(ux/sw,uy/sw,vx/sh,vy/sh,p00[0],p00[1]);
+      ctx.drawImage(card.texture,ix*sw,iy*sh,sw+0.5,sh+0.5,-.25,-.25,sw+0.5,sh+0.5);
+      ctx.restore();
+    }
+  }
+  ctx.globalAlpha=1;
+}
+function render(now){
+  ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,W,H);
+  const elapsed=now-startTime;
+  const spin=-(elapsed/CONFIG.duration)*Math.PI*2,cs=Math.cos(spin),ss=Math.sin(spin);
+  const order=cards.map(card=>({card,z:card.center[1]*ss+card.center[2]*cs})).sort((a,b)=>a.z-b.z);
+  for(const item of order)drawCard(item.card,spin,item.z);
+  requestAnimationFrame(render);
+}
+async function init(){
+  const loaded=await Promise.all(IMAGE_SOURCES.map(async(src,index)=>({index,image:await loadImage(src)})));
+  for(const item of loaded){
+    if(!item.image)continue;
+    const texture=roundedTexture(item.image);
+    if(texture)textureById.set(item.index,texture);
+  }
+  gridSpecs=makeGrid();
+  assignments=assignImages([...textureById.keys()],gridSpecs);
+  buildCards();resize();
+  addEventListener('resize',()=>resize());
+  startTime=performance.now();
+  requestAnimationFrame(render);
+}
+init();
+</script>
+</body>
+</html>

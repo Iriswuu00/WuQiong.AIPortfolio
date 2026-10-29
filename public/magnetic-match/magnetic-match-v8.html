@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>磁场匹配器 · 弹窗 Demo v8</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --dark: #1d1d1d;
+    --dark-alt: #252525;
+    --light: #e5e4e0;
+    --grey: rgba(229,228,224,0.5);
+    --grey-light: rgba(229,228,224,0.2);
+    --purple: #a855f7;
+    --purple-bright: #c084fc;
+    --purple-soft: #d8b4fe;
+    --ink: #f1f5f9;
+    --body: #cbd5e1;
+    --muted: #a098b5;
+    --faint: #8b83a0;
+  }
+  body {
+    background: var(--dark); color: var(--light);
+    font-family: -apple-system, "PingFang SC", sans-serif;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+
+  .cta-btn {
+    padding: 18px 48px; border-radius: 100px;
+    border: 1px solid var(--light); color: var(--light);
+    background: transparent; font-size: 16px; font-weight: 500;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .cta-btn:hover { background: var(--light); color: var(--dark); }
+
+  .mask {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+  }
+  .mask.open { display: flex; }
+
+  .modal {
+    width: 100%; max-width: 1080px;
+    height: 92vh;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    background: var(--dark-alt);
+    border: 1px solid var(--grey-light);
+    border-radius: 24px; padding: 26px 32px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 20px; right: 24px;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: transparent; border: 1px solid var(--grey-light);
+    cursor: pointer; color: var(--light); font-size: 14px;
+  }
+  .modal h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+  .beta-tag {
+    display: inline-block; vertical-align: middle;
+    font-size: 12px; font-weight: 600; letter-spacing: 0;
+    color: var(--purple-bright);
+    background: rgba(168,85,247,0.15);
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 100px; padding: 2px 10px; margin-left: 10px;
+  }
+  .modal .sub { color: var(--muted); font-size: 12px; margin: 4px 0 16px; }
+
+  /* 统一三处 emoji：尺寸、与右侧文字间距 */
+  .u-emoji { font-size: 15px; line-height: 1; margin-right: 7px; display: inline-block; vertical-align: -0.12em; }
+
+  .input-row { display: flex; gap: 12px; margin-bottom: 16px; flex-shrink: 0; }
+  .input-row select, .input-row input {
+    flex: 1; padding: 12px 14px; border-radius: 12px;
+    background: var(--dark); color: var(--light);
+    border: 1px solid var(--grey-light);
+    font-size: 14px; outline: none;
+  }
+  /* MBTI 下拉：去原生外观 + 自定义箭头 */
+  .input-row select {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23a098b5' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+  }
+  .input-row select:focus, .input-row input:focus { border-color: var(--grey); }
+  /* 日期框：保留原生日历选择器（可选年月日），图标染成紫灰色 */
+  .input-row input[type="date"] {
+    appearance: none; -webkit-appearance: none;
+  }
+  .input-row input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(68%) sepia(14%) saturate(700%) hue-rotate(210deg);
+  }
+  .start-btn {
+    padding: 12px 24px; border-radius: 12px;
+    background: var(--light); color: var(--dark); border: none;
+    font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap;
+  }
+
+  .result { display: none; flex: 1; min-height: 0; flex-direction: column; }
+  .result.show { display: flex; }
+
+  /* 结果区：左右两栏 */
+  .result-layout {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: 300px 1fr; gap: 20px;
+    align-items: stretch;
+  }
+  .result-left { display: grid; grid-template-rows: 1fr 1fr; gap: 14px; min-height: 0; }
+  .result-right { display: flex; flex-direction: column; min-height: 0; }
+
+  .result-card {
+    background: linear-gradient(160deg, rgba(168,85,247,0.13), rgba(168,85,247,0.04));
+    border: 1px solid rgba(168,85,247,0.22);
+    border-radius: 20px; padding: 20px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .result-card .label { font-size: 10px; color: var(--purple-bright); letter-spacing: 3px; font-weight: 700; }
+  .result-card .big { font-size: 52px; font-weight: 700; margin: 10px 0; line-height: 1; color: var(--purple-bright); }
+  .result-card .verdict { font-size: 19px; font-weight: 700; color: var(--ink); }
+  .result-card .verdict-sub {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(192,132,252,0.5);
+    border-radius: 100px; padding: 7px 16px;
+    font-size: 12px; color: var(--purple-soft); margin-top: 14px; line-height: 1.4;
+  }
+
+  .radar-card {
+    background: var(--dark);
+    border: 1px solid var(--grey-light);
+    border-radius: 20px; padding: 10px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .radar-card svg { width: 100%; height: auto; display: block; }
+
+  .dim-table {
+    background: var(--dark);
+    border: 1px solid var(--grey-light);
+    border-radius: 20px;
+    padding: 2px 22px;
+    margin-bottom: 14px; flex-shrink: 0;
+  }
+  /* 表头：吴琼 / 磁场关系 / 你 */
+  .dim-head {
+    display: flex; align-items: center;
+    padding: 14px 0 10px;
+    border-bottom: 1px solid var(--grey-light);
+  }
+  .dim-head-cell { flex: 1; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .dim-head-cell.mid { flex: 0 0 120px; width: 120px; text-align: center; }
+  .dim-head-cell.right { text-align: right; }
+
+  .dim-row {
+    display: flex; align-items: center;
+    padding: 11px 0; border-bottom: 1px solid var(--grey-light);
+  }
+  .dim-row:last-child { border-bottom: none; }
+  .dim-side { flex: 1; min-width: 0; }
+  .dim-side.right { text-align: right; }
+  .dim-label { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .dim-side.left .dim-label { font-weight: 700; }
+  .dim-type { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .dim-mid {
+    flex: 0 0 88px; width: 88px;
+    margin: 0 16px; padding: 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 100px; font-size: 12px; font-weight: 600; white-space: nowrap;
+    text-align: center;
+  }
+  .rel-mbti { color: #e9d5ff; background: rgba(233,213,255,0.12); }
+  .rel-zodiac { color: #a78bfa; background: rgba(167,139,250,0.12); }
+  .rel-day { color: #d8b4fe; background: rgba(216,180,254,0.12); }
+  .rel-ziwei { color: #c084fc; background: rgba(192,132,252,0.12); }
+
+  .summary-card {
+    background: var(--dark);
+    border: 1px solid var(--grey-light);
+    border-radius: 16px; padding: 14px 16px;
+    margin-bottom: 14px; flex-shrink: 0;
+  }
+  .summary-title {
+    display: flex; align-items: center;
+    font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px;
+  }
+  .summary-body { font-size: 13px; color: var(--light); line-height: 1.7; }
+  .bottom-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 16px; margin-top: auto; flex-shrink: 0;
+  }
+  .tip-line { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .resume-btn {
+    display: inline-block;
+    padding: 12px 32px; border-radius: 100px;
+    border: 1px solid var(--light); color: var(--light);
+    background: var(--dark-alt);
+    text-decoration: none; font-size: 13px; font-weight: 500;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<button class="cta-btn" onclick="openModal()">测测我们的磁场</button>
+
+<div class="mask" id="mask" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>磁场匹配器 <span class="beta-tag">Beta</span></h2>
+    <p class="sub">选择你的 MBTI&amp;出生日期，看看我们是不是天选事业搭子！</p>
+
+    <div class="input-row">
+      <select id="mbti">
+        <option value="">选你的 MBTI…</option>
+        <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+        <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+        <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+        <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+      </select>
+      <input type="date" id="birth" value="1996-01-11" min="1950-01-01" max="2010-12-31" onclick="onDateClick(event)">
+      <button class="start-btn" onclick="calc()">开始匹配 →</button>
+    </div>
+
+    <div class="result" id="result">
+      <div class="result-layout">
+        <div class="result-left">
+          <div class="result-card">
+            <div class="label">MAGNETIC MATCH</div>
+            <div class="big" id="pct">--</div>
+            <div class="verdict" id="verdict">--</div>
+            <div class="verdict-sub"><span class="u-emoji">🌟</span><span id="verdictSub">--</span></div>
+          </div>
+          <div class="radar-card">
+            <svg id="radarSvg" viewBox="0 0 240 150" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+        </div>
+
+        <div class="result-right">
+          <div class="dim-table">
+            <div class="dim-head">
+              <div class="dim-head-cell">吴琼</div>
+              <div class="dim-head-cell mid">磁场关系</div>
+              <div class="dim-head-cell right">你</div>
+            </div>
+            <div class="dim-row">
+              <div class="dim-side left">
+                <div class="dim-label">英星入庙格</div>
+                <div class="dim-type">紫微斗数</div>
+              </div>
+              <div class="dim-mid rel-ziwei" id="dimZiwei">--</div>
+              <div class="dim-side right">
+                <div class="dim-label">你的命宫</div>
+                <div class="dim-type">紫微斗数</div>
+              </div>
+            </div>
+            <div class="dim-row">
+              <div class="dim-side left">
+                <div class="dim-label">丁火·食神格</div>
+                <div class="dim-type">八字四柱</div>
+              </div>
+              <div class="dim-mid rel-day" id="dimDay">--</div>
+              <div class="dim-side right">
+                <div class="dim-label" id="yourDay">--</div>
+                <div class="dim-type">八字四柱</div>
+              </div>
+            </div>
+            <div class="dim-row">
+              <div class="dim-side left">
+                <div class="dim-label">摩羯座</div>
+                <div class="dim-type">星座</div>
+              </div>
+              <div class="dim-mid rel-zodiac" id="dimZodiac">--</div>
+              <div class="dim-side right">
+                <div class="dim-label" id="yourZodiac">--</div>
+                <div class="dim-type">星座</div>
+              </div>
+            </div>
+            <div class="dim-row">
+              <div class="dim-side left">
+                <div class="dim-label">ENTP</div>
+                <div class="dim-type">MBTI</div>
+              </div>
+              <div class="dim-mid rel-mbti" id="dimMbti">--</div>
+              <div class="dim-side right">
+                <div class="dim-label" id="yourMbti">--</div>
+                <div class="dim-type">MBTI</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-title"><span class="u-emoji">🔮</span>合盘显示</div>
+            <div class="summary-body" id="summary">--</div>
+          </div>
+          <div class="bottom-row">
+            <div class="tip-line"><span class="u-emoji">💡</span>Tip：匹配结果仅供参考，最终以真实沟通为准！</div>
+            <a class="resume-btn" href="#">下载简历 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const TIANGAN = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+  const WUXING = { "甲":"甲木","乙":"乙木","丙":"丙火","丁":"丁火","戊":"戊土","己":"己土","庚":"庚金","辛":"辛金","壬":"壬水","癸":"癸水" };
+
+  function getZodiac(m, d) {
+    const s = [["摩羯",19],["水瓶",18],["双鱼",20],["白羊",19],["金牛",20],["双子",20],["巨蟹",22],["狮子",22],["处女",22],["天秤",22],["天蝎",21],["射手",21],["摩羯",19]];
+    return d < s[m][1] ? s[m-1][0] : s[m][0];
+  }
+  function getDayMaster(dateStr) {
+    const base = new Date(1900, 0, 1);
+    const target = new Date(dateStr + "T12:00:00");
+    const diff = Math.round((target - base) / 86400000);
+    const idx = ((39 + diff) % 60 + 60) % 60;
+    return WUXING[TIANGAN[idx % 10]];
+  }
+
+  const mbtiRel = {
+    INTJ: ["军师与先锋","你的战略 + 我的热情，神仙组合"],
+    INTP: ["智囊团同袍","逻辑碰撞，越聊越有火花"],
+    ENTJ: ["强强联合","你拍板我冲锋，执行力拉满"],
+    ENTP: ["同路旅人","两个 Idea 人，脑暴停不下来"],
+    INFJ: ["深度共振","能一起把事做透"],
+    INFP: ["创意同频","感性互补，作品会有温度"],
+    ENFJ: ["领导力搭档","都能感染别人，配合顺畅"],
+    ENFP: ["镜像队友","太像了，可能一起跑偏但一起成事"],
+    ISTJ: ["稳扎稳打","你守流程我创新，互补"],
+    ISFJ: ["靠谱后盾","你关心团队我推进事情"],
+    ESTJ: ["执行互补","你讲落地我讲方向，磨合后很强"],
+    ESFJ: ["团队粘合剂","你关心人我关心事"],
+    ISTP: ["冷静补位","话不多但能干活，意外合拍"],
+    ISFP: ["审美同好","视觉敏感度一致"],
+    ESTP: ["行动派搭档","都爱动手，可能太冒进"],
+    ESFP: ["活力伙伴","工作氛围会很好"],
+  };
+  const zodiacRel = { "摩羯":"土象稳配","水瓶":"风象点燃","双鱼":"水象共情","白羊":"火象突破","金牛":"土象踏实","双子":"风象创意","巨蟹":"水象细腻","狮子":"火象引领","处女":"土象细节","天秤":"风象平衡","天蝎":"水象深度","射手":"火象自由" };
+  const dayRel = { "甲木":"木火通明","乙木":"木火相生","丙火":"火火相映","丁火":"双火同辉","戊土":"火土相生","己土":"火土温润","庚金":"火炼真金","辛金":"火暖金寒","壬水":"水火既济","癸水":"水火既济" };
+  // 紫微关系：访客命宫未知，按 hash 从标签库动态取，保证多样
+  const ziweiRel = ["事业互旺","贵人同频","命宫相照","星曜引动","格局相成","气场相合","双星会照","事业共振","贵人相扶","星盘同频"];
+
+  const RADAR_DIMS = ["战略默契","执行互补","创意同频","沟通顺畅","成长加速"];
+
+  function renderRadar(values) {
+    const svg = document.getElementById("radarSvg");
+    const cx = 120, cy = 83, R = 56, N = 5;
+    const angles = [];
+    for (let i = 0; i < N; i++) angles.push((-90 + i * 72) * Math.PI / 180);
+    function ring(ratio) {
+      return angles.map(a =>
+        (cx + R*ratio*Math.cos(a)).toFixed(1) + "," + (cy + R*ratio*Math.sin(a)).toFixed(1)
+      ).join(" ");
+    }
+    function dataPts(vals) {
+      return vals.map((v,i) =>
+        (cx + R*v*Math.cos(angles[i])).toFixed(1) + "," + (cy + R*v*Math.sin(angles[i])).toFixed(1)
+      ).join(" ");
+    }
+    let h = "";
+    [0.25, 0.5, 0.75, 1].forEach(r => {
+      h += `<polygon points="${ring(r)}" fill="none" stroke="rgba(229,228,224,0.12)" stroke-width="1"/>`;
+    });
+    for (let i = 0; i < N; i++) {
+      h += `<line x1="${cx}" y1="${cy}" x2="${(cx+R*Math.cos(angles[i])).toFixed(1)}" y2="${(cy+R*Math.sin(angles[i])).toFixed(1)}" stroke="rgba(229,228,224,0.1)" stroke-width="1"/>`;
+    }
+    h += `<polygon points="${ring(0.7)}" fill="none" stroke="rgba(229,228,224,0.45)" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+    h += `<polygon points="${dataPts(values)}" fill="rgba(168,85,247,0.22)" stroke="#a855f7" stroke-width="2"/>`;
+    values.forEach((v,i) => {
+      const x = cx + R*v*Math.cos(angles[i]);
+      const y = cy + R*v*Math.sin(angles[i]);
+      h += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#c084fc"/>`;
+    });
+    const anchors = ["middle","start","start","end","end"];
+    RADAR_DIMS.forEach((name,i) => {
+      const x = cx + R*1.25*Math.cos(angles[i]);
+      const y = cy + R*1.25*Math.sin(angles[i]);
+      h += `<text x="${x.toFixed(1)}" y="${(y+4).toFixed(1)}" fill="#a098b5" font-size="11" text-anchor="${anchors[i]}">${name}</text>`;
+    });
+    svg.innerHTML = h;
+  }
+
+  // 日期框：点击年/月/日字段区域可直接输入；点击字段外空白/图标弹日历
+  function onDateClick(e) {
+    const input = e.currentTarget;
+    const rect = input.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    // 左侧字段区域（年月日 + 分隔符，约 110 CSS 像素）：原生聚焦，允许直接输入
+    if (x < 110) return;
+    // 字段外空白/图标：弹日历
+    try { input.showPicker(); } catch(err) {}
+  }
+
+  function openModal() { document.getElementById("mask").classList.add("open"); }
+  function closeModal() { document.getElementById("mask").classList.remove("open"); }
+
+  function calc() {
+    const mbti = document.getElementById("mbti").value;
+    const birth = document.getElementById("birth").value;
+    if (!mbti || !birth) { alert("选一下 MBTI 和生日"); return; }
+
+    const [y, m, d] = birth.split("-").map(Number);
+    const zodiac = getZodiac(m, d);
+    const day = getDayMaster(birth);
+    const hash = (mbti + birth).split("").reduce((a,c)=>a+c.charCodeAt(0),0);
+    const pct = 85 + (hash % 12);
+
+    document.getElementById("pct").textContent = pct;
+    document.getElementById("yourMbti").textContent = mbti;
+    document.getElementById("yourZodiac").textContent = zodiac + "座";
+    document.getElementById("yourDay").textContent = day;
+    document.getElementById("dimMbti").textContent = mbtiRel[mbti][0];
+    document.getElementById("dimZodiac").textContent = zodiacRel[zodiac] || "同频";
+    document.getElementById("dimDay").textContent = dayRel[day] || "互补";
+    document.getElementById("dimZiwei").textContent = ziweiRel[hash % ziweiRel.length];
+    document.getElementById("verdict").textContent = pct >= 90 ? "天选事业搭子" : "互补型战友";
+    document.getElementById("verdictSub").textContent = mbtiRel[mbti][1];
+    const rel = mbtiRel[mbti][0];
+    const dayT = dayRel[day] || "能量相合";
+    const zodT = zodiacRel[zodiac] || "节奏一致";
+    const summaryTpl = [
+      `我们在${rel}的关系里互补性最强。你的${dayT}和我的丁火形成正向循环，${zodT}。建议聊聊。`,
+      `${rel}是我们最亮眼的组合。你的${dayT}遇上我的丁火，再加上${zodT}，配合起来很顺，先聊聊看？`,
+      `从盘面上看，${rel}让我们的默契度拉满。你的${dayT}与我的丁火相生，${zodT}，值得深入聊聊。`,
+      `我们最合的地方是${rel}。你的${dayT}补我的丁火，节奏上${zodT}，是能一起成事的组合。`,
+      `这套组合的亮点在${rel}：你的${dayT}和我的丁火互相成就，${zodT}，期待和你聊聊。`,
+      `${rel}，再加上${dayT}与丁火的正向循环、${zodT}，我们的适配度很高，要不先聊聊？`,
+      `盘面上我们是${rel}。你的${dayT}温润我的丁火，${zodT}，合作起来会很有火花。`,
+      `最直观的感受是${rel}——你的${dayT}和我的丁火同频，${zodT}，建议约个时间聊聊。`,
+    ];
+    document.getElementById("summary").textContent = summaryTpl[hash % summaryTpl.length];
+    const radarVals = [0,1,2,3,4].map(i =>
+      Math.round((0.82 + ((hash + i*7) % 14)/100) * 100) / 100
+    );
+    renderRadar(radarVals);
+    document.getElementById("result").classList.add("show");
+  }
+</script>
+
+</body>
+</html>

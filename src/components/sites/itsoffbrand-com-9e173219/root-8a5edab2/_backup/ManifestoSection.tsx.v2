@@ -1,0 +1,81 @@
+"use client";
+
+import { useReveal } from "@/lib/useReveal";
+import Link from "next/link";
+
+/**
+ * Manifesto (huge statement line) + About intro (two columns).
+ * Source: one <section> with two stacked grids.
+ */
+export default function ManifestoSection() {
+  const ref = useReveal<HTMLElement>();
+
+  return (
+    <section id="about" className="s" ref={ref}>
+      <div className="c">
+        <div className="spacer-10" />
+        <div className="grid-main">
+          <div className="mbm-diff mf-title-w">
+            <h2 className="h-b">
+              <span className="mf-line" style={{ fontSize: "26px", lineHeight: 1, textTransform: "none" }}>
+                深耕教育与儿童赛道的 AI 应用产品经理。掌握中文、英语、视觉、代码四种语言表
+                <br />
+                达体系，作用于人与人、人与 AI 的双重协作；以设计审美、工程落地与数据驱动的复
+                <br />
+                合能力，在 K12 教育、电商营销内容生产、儿童陪伴等三类场景中完成AI 产品 0→1→n 落地。
+              </span>
+            </h2>
+          </div>
+        </div>
+        <div className="spacer-10" />
+        <div className="grid-main m-flex">
+          <div className="mbm-diff mf-left-w">
+            <p className="text-small" style={{ fontSize: "1em", lineHeight: 1.6 }}>
+              香港浸会大学 硕士 人工智能与数字媒体 2024-2026
+              <br />
+              山西大学 本科 软件工程 2014-2018
+            </p>
+            <div className="o-hidden link-wrap">
+              <div className="o-hidden">
+                <Link
+                  href="/about-us"
+                  stagger-el=""
+                  className="page-link-w w-inline-block"
+                >
+                  <div className="o-hidden page-link-inner">
+                    <div split-text="" className="text-small btn-txt">About Us</div>
+                    <div className="btn-icon-r">
+                      <div className="btn-icon-w">
+                        <div className="text-small btn-txt">-&gt;</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="link-track">
+                    <div className="link-track-fill" />
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="mbm-diff mf-right-w">
+            <div className="text-small" style={{ fontSize: "0.75em", lineHeight: 1.6 }}>
+              <p>
+                <strong>1️⃣AI 产品应用层落地</strong>：主导基于 LLM+RAG 的 K12 家庭 AI 伴学终端、基于垂类微调的营销图片 GC 中台、聚焦 Agent 记忆 Pro 升级的儿童 AI 陪伴硬件 3 个 AI 产品的 0→1→n 的场景定义与体验导向方案落地。实现伴学机次周留存由 30% →40% 且续费率 6%↑、营销中台单张生产周期从半天压缩至 5 分钟且单运营月均产出 900+ 张。
+              </p>
+              <p>
+                <strong>2️⃣数据驱动的AIPM工作方法</strong>：具备从需求的抽象化、评测驱动产品、评估体系搭建、Badcase闭环优化到商业化验证去形成从数据→产品迭代的完整闭环工作方法。
+              </p>
+              <p>
+                <strong>3️⃣工程化搭建原型能力</strong>：可通过 Python 与 AI coding 快速搭建demo快速验证idea，缩短从概念到可行性验证的落地周期，曾独立完成北美官网 vibecoding 搭建并沉淀为可复用 skill。
+              </p>
+              <p>
+                <strong>4️⃣复杂跨团队统筹与国际化视野</strong>：具备高复杂度跨团队项目管理经验，在伴学机项目中统筹产研、教研等 6个跨职能团队保障敏捷交付。香港留学背景，英语可作为工作语言，高效对齐技术边界与协作。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="spacer-10" />
+      </div>
+    </section>
+  );
+}
