@@ -411,47 +411,47 @@ export default function ClosingSection() {
           {/* 四角内容：和 about-demo.html 一致，初始 opacity 0 */}
           {/* 左上：精准表达 */}
           <div hsc-corner="" style={cornerStyle({ top: "18%", left: "12%" })}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div style={{ fontSize: "28px", lineHeight: "1" }}>💯</div>
-              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333" }}>
+            <div style={{ fontSize: "28px", lineHeight: "1" }}>💯</div>
+            <div>
+              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333", marginBottom: "4px" }}>
                 精准表达
               </div>
+              <div style={{ fontSize: "14px", color: "#666" }}>与人与 AI 的协作</div>
             </div>
-            <div style={{ fontSize: "14px", color: "#666", marginLeft: "36px" }}>与人与 AI 的协作</div>
           </div>
 
           {/* 右上：判断力 */}
           <div hsc-corner="" style={cornerStyle({ top: "18%", right: "12%" })}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div style={{ fontSize: "28px", lineHeight: "1" }}>🦋</div>
-              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333" }}>
+            <div style={{ fontSize: "28px", lineHeight: "1" }}>🦋</div>
+            <div>
+              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333", marginBottom: "4px" }}>
                 判断力
               </div>
+              <div style={{ fontSize: "14px", color: "#666" }}>发现问题 → AI 解法 → 判断验证</div>
             </div>
-            <div style={{ fontSize: "14px", color: "#666", marginLeft: "36px" }}>发现问题 → AI 解法 → 判断验证</div>
           </div>
 
           {/* 左下：审美感受力 */}
           <div hsc-corner="" style={cornerStyle({ bottom: "18%", left: "12%" })}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div style={{ fontSize: "28px", lineHeight: "1" }}>🌈</div>
-              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333" }}>
+            <div style={{ fontSize: "28px", lineHeight: "1" }}>🌈</div>
+            <div>
+              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333", marginBottom: "4px" }}>
                 审美感受力
               </div>
+              <div style={{ fontSize: "14px", color: "#666" }}>拉开差异化</div>
             </div>
-            <div style={{ fontSize: "14px", color: "#666", marginLeft: "36px" }}>拉开差异化</div>
           </div>
 
           {/* 右下：持续学习 */}
           <div hsc-corner="" style={cornerStyle({ bottom: "18%", right: "12%" })}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div style={{ fontSize: "28px", lineHeight: "1" }}>👨‍🦳</div>
-              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333" }}>
+            <div style={{ fontSize: "28px", lineHeight: "1" }}>👶</div>
+            <div>
+              <div style={{ fontSize: "22px", fontWeight: 600, color: "#333", marginBottom: "4px" }}>
                 持续学习
               </div>
-            </div>
-            <div style={{ fontSize: "14px", color: "#666", marginLeft: "36px" }}>
-              好奇心 + 高质量输入，才有好产出
+              <div style={{ fontSize: "14px", color: "#666" }}>
+                好奇心 + 高质量输入，才有好产出
+              </div>
             </div>
           </div>
         </div>

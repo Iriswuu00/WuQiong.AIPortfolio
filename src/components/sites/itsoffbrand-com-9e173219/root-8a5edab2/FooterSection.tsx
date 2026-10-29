@@ -23,13 +23,18 @@ export default function FooterSection() {
               <div className="grid-main ft-cta-grid">
                 <div className="mbm-diff">
                   <div stagger-scroll="" split-text="" className="h-a is-sub">
-                    How about we do a
+                    How about
+                  </div>
+                </div>
+                <div className="mbm-diff">
+                  <div stagger-scroll="" split-text="" className="h-a is-sub">
+                    we do a thing
                   </div>
                 </div>
                 <div className="ft-cta-row">
                   <div className="mbm-diff is-nb">
                     <div stagger-scroll="" split-text="" className="h-a is-sub">
-                      thing or two,
+                      or two,
                     </div>
                   </div>
                   <div className="page-btn-w">
