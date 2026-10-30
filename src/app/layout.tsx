@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import ScrollFX from "@/components/sites/itsoffbrand-com-9e173219/root-8a5edab2/ScrollFX";
 import ImageProtection from "@/components/ImageProtection";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const ataero = localFont({
@@ -44,6 +45,7 @@ export default function RootLayout({
         {children}
         <ScrollFX />
         <ImageProtection />
+        <SmoothScroll />
       </body>
     </html>
   );
