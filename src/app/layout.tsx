@@ -28,6 +28,7 @@ export const metadata: Metadata = {
       rel: "preload",
       href: "/sites/itsoffbrand-com-9e173219/root-8a5edab2/orb.min.js",
       as: "script",
+      fetchPriority: "high",
     },
   ],
 };

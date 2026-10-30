@@ -129,7 +129,7 @@ export default function Orb() {
     else {
       const s = document.createElement("script");
       s.src = SRC;
-      s.async = true;
+      s.async = false;
       s.onload = init;
       document.head.appendChild(s);
     }
