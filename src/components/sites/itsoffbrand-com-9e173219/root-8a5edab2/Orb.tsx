@@ -118,7 +118,7 @@ export default function Orb() {
     const init = () => {
       if (disposed || !window.Orb) return;
       try {
-        orb = new window.Orb(el, 100);
+        orb = new window.Orb(el, 64);
         orb.setTexture(TEX);
       } catch (err) {
         console.error("[Orb] init failed", err);

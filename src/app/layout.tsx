@@ -17,12 +17,19 @@ const ataero = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "OFF+BRAND. | Global Creative & Technology Studio",
+  title: "吴琼. | UX Design & AIPM Studio",
   description:
-    "Award-winning creative & technology studio. Branding, web design and development for ambitious brands.",
+    "吴琼 · AI产品经理作品集，专注于UX设计与AI产品创新。",
   icons: {
     icon: "/sites/itsoffbrand-com-9e173219/root-8a5edab2/images/64ddf4bf30ef3bf0337f569f_UM - 1.jpg",
   },
+  links: [
+    {
+      rel: "preload",
+      href: "/sites/itsoffbrand-com-9e173219/root-8a5edab2/orb.min.js",
+      as: "script",
+    },
+  ],
 };
 
 export default function RootLayout({
