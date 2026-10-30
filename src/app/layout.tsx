@@ -31,6 +31,12 @@ export const metadata: Metadata = {
       as: "script",
       fetchPriority: "high",
     },
+    {
+      rel: "preload",
+      href: "/sites/itsoffbrand-com-9e173219/root-8a5edab2/textures/ob_texture-dark.jpg",
+      as: "image",
+      fetchPriority: "high",
+    },
   ],
 };
 
