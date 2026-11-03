@@ -1,5 +1,5 @@
 /*
-  X-Frame-Options: DENY
+  X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
 
 # 静态资源长缓存
